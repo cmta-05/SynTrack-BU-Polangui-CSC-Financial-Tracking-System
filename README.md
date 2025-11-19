@@ -2,7 +2,7 @@
 
 ### **Official Repository – BSIT 3B Group 3**
 
-Welcome to the main repository for our SIA Phase 1–3 project:
+Welcome to the main repository for our SIA project:
 **CSC Financial Tracking and Payment Management System**
 (Client: *Bicol University Polangui – College Student Council*)
 
@@ -39,9 +39,13 @@ CSC-Financial-Tracking-and-Payment-Management-System/
 │   ├── Step_4_Prototype/
 │   └── Step_5_RDR_Compilation/
 │
-├── Phase_2_System_Design/        (future)
-├── Phase_3_Development/          (future)
-│
+├── Phase_2_Architecture_and_Development/        (future)
+├── Phase_3_System_Integration_Design/           (future)
+│── Phase_4_Evaluation/                          (future)
+│── Phase_5_Feasibility_Analysis/                (future)
+│── Phase_6_Management_Plan/                     (future)
+│── Phase_7_Evaluation/                          (future)
+│── Phase_8_Implementation/                      (future)
 ```
 
 Only upload files inside the correct *step* folder.
