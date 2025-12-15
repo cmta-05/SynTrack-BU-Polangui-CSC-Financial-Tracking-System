@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>My CSC Fee - CSC PayTrack</title>
+    <title>My CSC Fee - SynTrack</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap -->
@@ -11,21 +11,59 @@
       rel="stylesheet"
     />
     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <!-- Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link
       rel="icon"
       type="image/png"
       href="../assets/img/csc-paytrack-logo.png"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      /* Icon sizing */
+      .nav-link .material-icons,
+      .nav-link .material-symbols-outlined {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link i.fa-solid {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      .nav-link ion-icon {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link svg {
+        width: 22px;
+        height: 22px;
+        vertical-align: middle;
+      }
+    </style>
   </head>
   <body onload="initPage('student-history')">
     <div class="app-shell">
       <aside class="sidebar">
         <div class="sidebar-brand">
-          <div class="logo-circle">
-            <img src="../assets/img/csc-paytrack-logo.png" alt="CSC PayTrack" />
+          <div class="sidebar-logo-wrapper">
+            <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack" class="sidebar-logo" />
           </div>
-          <div>
-            <div class="fw-bold">CSC PayTrack</div>
+          <div class="sidebar-brand-text">
+            <div class="fw-bold" style="font-size: 1.5rem;">SynTrack</div>
             <small>Student Portal</small>
           </div>
           <button
@@ -39,36 +77,38 @@
         <div class="sidebar-label">Main Menu</div>
         <nav>
           <a class="nav-link" href="student_dashboard.html">
-            <i class="bi bi-speedometer2"></i><span>Home</span>
+            <span>Dashboard</span>
           </a>
-          <a class="nav-link" href="student_history.html">
-            <i class="bi bi-receipt"></i><span>My CSC Fee</span>
+          <a class="nav-link active" href="student_cscfee.html">
+            <span>CSC Fee</span>
           </a>
           <a class="nav-link" href="student_lanyards.html">
-            <i class="bi bi-credit-card-2-front"></i><span>Lanyards</span>
+            <span>Lanyards</span>
           </a>
           <a class="nav-link" href="student_pe_uniform.html">
-            <i class="bi bi-basket3"></i><span>PE Uniform</span>
+            <span>PE Uniform</span>
           </a>
           <a class="nav-link" href="student_seal_plate.html">
-            <i class="bi bi-patch-check"></i><span>Seal &amp; Plates</span>
+            <span>Seal &amp; Plates</span>
           </a>
           <a class="nav-link" href="student_merchandise.html">
-            <i class="bi bi-bag"></i><span>Merch Items</span>
+            <span>Merch Items</span>
           </a>
-          <a class="nav-link" href="student_dispute.html">
-            <i class="bi bi-chat-dots"></i><span>Payment Concerns</span>
+          <a class="nav-link" href="student_concerns.html">
+            <span>Concerns</span>
           </a>
         </nav>
+                <div class="sidebar-label-text">
+          Bicol University Polangui<br>
+          College Student Council<br>
+          Financial Tracking System
+        </div>
       </aside>
 
       <div class="workspace">
         <header class="topbar">
-          <div>
-            <div class="topbar-title">CSC PayTrack</div>
-            <div class="topbar-subtitle">
-              Bicol University Polangui - College Student Council
-            </div>
+          <div class="topbar-left">
+            <i class="bi bi-calendar3 topbar-date-icon"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">
@@ -82,10 +122,11 @@
             </button>
             <button
               type="button"
-              class="icon-btn"
+              class="icon-btn notification-btn"
               aria-label="Notifications"
               onclick="toggleNotifications()"
             >
+              <span class="notification-badge">1</span>
               🔔
             </button>
             <div class="user-menu">
@@ -94,31 +135,46 @@
                 onclick="toggleUserMenu()"
                 role="button"
               >
-                VR
+                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
-                  <strong>VANNESA ROSE B.</strong>
-                  <div class="small text-muted">BSIT | 3rd Year</div>
+                  <strong>JUAN DELA CRUZ</strong>
+                  <div class="small text-muted">BSIT 3B</div>
                 </div>
-                <a href="../profile.html">Profile</a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal"
-                  >Manage Password</a
-                >
-                <a href="../faqs.html">FAQs</a>
-                <a href="../contact_admin.html">Contact Admin</a>
-                <a href="../feedback.html">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#faqsModal">FAQs</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
-                <div class="notification-item">
-                  Payment received for CSC Fee AY 2023–2024.
+                <div class="notification-item unread">
+                  <strong>Payment Verified</strong>
+                  <p>Your CSC Fee payment for AY 2025-2026 has been verified.</p>
+                  <small>2 hours ago</small>
                 </div>
                 <div class="notification-item">
-                  Merchandise order M-001 is ready for pickup.
+                  <strong>Order Ready</strong>
+                  <p>Your PE Uniform order is ready for pickup at the CSC Office.</p>
+                  <small>1 day ago</small>
                 </div>
                 <div class="notification-item">
-                  New response to your payment concern.
+                  <strong>Payment Received</strong>
+                  <p>Payment received for Lanyard purchase. Receipt ID: 19542</p>
+                  <small>2 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Concern Resolved</strong>
+                  <p>Your payment concern has been resolved by the Treasurer.</p>
+                  <small>3 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Reminder</strong>
+                  <p>Don't forget to submit your CSC Fee payment before the deadline.</p>
+                  <small>5 days ago</small>
                 </div>
               </div>
             </div>
@@ -126,38 +182,142 @@
         </header>
 
         <div class="page-content">
-          <div class="page-header">
-            <h2 class="fw-bold mb-1">My CSC Fee</h2>
-            <p class="placeholder-note mb-2">
-              View your CSC fee payment history per Academic Year, including
-              status and basic receipt information. This prototype uses static
-              mock data.
+          <div class="page-header mb-4">
+            <h2 class="fw-bold mb-2">Bicol University Polangui</h2>
+            <h3 class="fw-bold mb-3">COLLEGE STUDENT COUNCIL FEE</h3>
+            <p class="mb-0">
+              View CSC FEE Information you need to know, YOUR payment history per Academic Year, including status and basic receipt information.
             </p>
-            <button
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              onclick="alert('CSC Fee information content is illustrative only.')"
-            >
-              View CSC Fee Info
-            </button>
           </div>
 
-          <section id="studentCscFeeHistory"></section>
+          <!-- WHAT YOU NEED TO KNOW -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">WHAT YOU NEED TO KNOW</h4>
+            
+            <div class="accordion mb-3" id="cscFeeAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWhatIs">
+                    What is the CSC Fee?
+                  </button>
+                </h2>
+                <div id="collapseWhatIs" class="accordion-collapse collapse show" data-bs-parent="#cscFeeAccordion">
+                  <div class="accordion-body">
+                    The CSC Fee is the official contribution collected from every student each academic year.<br><br>
+                    It serves as the primary funding source for student services such as ID Validation, Insurance Fee, CSC Fee, and USC Fee.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBreakdown">
+                    Breakdown of the USC/CSC Fee payment:
+                  </button>
+                </h2>
+                <div id="collapseBreakdown" class="accordion-collapse collapse" data-bs-parent="#cscFeeAccordion">
+                  <div class="accordion-body">
+                    <ul class="mb-0">
+                      <li>ID Validation - ₱2.00</li>
+                      <li>Insurance Fee - ₱20.00</li>
+                      <li>CSC Fee - ₱170.00</li>
+                      <li>USC Fee - ₱28.00</li>
+                      <li><strong>TOTAL - ₱220.00</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeadlines">
+                    Deadlines & reminders:
+                  </button>
+                </h2>
+                <div id="collapseDeadlines" class="accordion-collapse collapse" data-bs-parent="#cscFeeAccordion">
+                  <div class="accordion-body">
+                    Your CSC Fee payment is due on <strong>January 15, 2026</strong>.<br><br>
+                    CSC Fee for the AY 2025–2026 must be settled within 7 days.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHowToPay">
+                    How to Pay your CSC Fee:
+                  </button>
+                </h2>
+                <div id="collapseHowToPay" class="accordion-collapse collapse" data-bs-parent="#cscFeeAccordion">
+                  <div class="accordion-body">
+                    <ol class="mb-0">
+                      <li>Check your academic year that requires payment.</li>
+                      <li>Pay the CSC Fee through your Block Treasurer.</li>
+                      <li>Wait for the official receipt after payment.</li>
+                      <li>Return to SynTrack and open the CSC Fee section.</li>
+                      <li>Wait for verification by the CSC Treasurer (Status: Paid & Verified).</li>
+                      <li>Check your notifications for confirmation or follow-up.</li>
+                      <li>You're all set! Your College Student Council Fee is now marked as paid with confirmation. You may use the unofficial receipt or a screenshot of the CSC Fee section as proof of payment whenever needed.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- MY CSC FEE RECORDS -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">MY CSC FEE RECORDS</h4>
+            <div id="cscFeeRecords"></div>
+          </section>
         </div>
 
         <footer class="app-footer">
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span
-              >CSC PayTrack · Bicol University Polangui - College Student
-              Council</span
-            >
-            <span class="meta-text">
-              Prototype UI · For academic purposes only
-            </span>
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
     </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Unofficial Acknowledgment Receipt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="receiptModalBody">
+            <!-- Receipt content will be generated here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include all modals from dashboard -->
+    <div id="commonModals"></div>
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -166,13 +326,145 @@
     <script src="../assets/js/forms.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
+      // Load common modals
+      fetch('../student/common_modals.html')
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('commonModals').innerHTML = html;
+        })
+        .catch(() => {
+          document.getElementById('commonModals').innerHTML = '<p>Modals failed to load</p>';
+        });
+
       document.addEventListener("DOMContentLoaded", () => {
         applyStoredTheme();
         startClock("currentDateTime");
-        loadStudentHistoryTable();
+        loadCscFeeRecords();
       });
+
+      function loadCscFeeRecords() {
+        const container = document.getElementById("cscFeeRecords");
+        if (!container) return;
+
+        const records = [
+          {
+            academicYear: "2022-2023",
+            status: "Paid (verified)",
+            receiptId: "16855",
+            datePaid: "January 12, 2023",
+            amountPaid: "₱220",
+            verifiedBy: "REINNA MARIE S. FIEL",
+            verificationDate: "January 14, 2023",
+            canViewReceipt: true
+          },
+          {
+            academicYear: "2023-2024",
+            status: "Paid (Pending Verification)",
+            receiptId: "19542",
+            datePaid: "January 10, 2024",
+            amountPaid: "₱220",
+            verificationStatus: "Awaiting Treasurer Review",
+            canViewReceipt: false
+          },
+          {
+            academicYear: "2024-2025",
+            status: "Not Yet Paid",
+            receiptId: "n/a",
+            datePaid: "n/a",
+            amountPaid: "n/a"
+          },
+          {
+            academicYear: "2025-2026",
+            status: "Not Yet Paid",
+            receiptId: "n/a",
+            datePaid: "n/a",
+            amountPaid: "n/a"
+          }
+        ];
+
+        container.innerHTML = "";
+
+        records.forEach(record => {
+          const card = document.createElement("div");
+          card.className = "card mb-3";
+          card.innerHTML = `
+            <div class="card-body">
+              <h5 class="fw-bold mb-3">Academic Year ${record.academicYear}</h5>
+              <div class="row mb-2">
+                <div class="col-md-6"><strong>Status:</strong> ${record.status}</div>
+                <div class="col-md-6"><strong>Receipt ID:</strong> ${record.receiptId}</div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-6"><strong>Date Paid:</strong> ${record.datePaid}</div>
+                <div class="col-md-6"><strong>Amount Paid:</strong> ${record.amountPaid}</div>
+              </div>
+              ${record.verifiedBy ? `<div class="row mb-2"><div class="col-md-6"><strong>Verified By:</strong> ${record.verifiedBy}</div><div class="col-md-6"><strong>Verification Date:</strong> ${record.verificationDate}</div></div>` : ''}
+              ${record.verificationStatus ? `<div class="row mb-2"><div class="col-12"><strong>Verification Status:</strong> ${record.verificationStatus}</div></div>` : ''}
+              ${record.canViewReceipt ? `<button class="btn btn-primary btn-sm mt-2" onclick="viewReceipt('${record.receiptId}', '${record.academicYear}', '${record.datePaid}', '${record.verifiedBy}', '${record.verificationDate}')">View Unofficial Copy of Receipt</button>` : ''}
+              ${record.canViewReceipt === false ? `<button class="btn btn-secondary btn-sm mt-2" disabled>View Unofficial Copy of Receipt</button>` : ''}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      function viewReceipt(receiptId, academicYear, datePaid, verifiedBy, verificationDate) {
+        const modalBody = document.getElementById("receiptModalBody");
+        const studentName = "JUAN DELA CRUZ";
+        const [year1, year2] = academicYear.split("-");
+        
+        modalBody.innerHTML = `
+          <div class="receipt-container" style="border: 2px solid #000; padding: 2rem; font-family: Arial, sans-serif;">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
+                <div class="mb-2"><strong>BICOL UNIVERSITY</strong></div>
+                <div>University Student Council</div>
+                <div>Daraga, Albay</div>
+              </div>
+              <div class="text-end">
+                <div><strong>No ${receiptId}</strong></div>
+              </div>
+            </div>
+            
+            <div class="text-center mb-4">
+              <h4 class="fw-bold">OFFICIAL ACKNOWLEDGMENT RECEIPT</h4>
+            </div>
+
+            <div class="mb-3">
+              <div class="mb-2"><strong>Date:</strong> ${datePaid}</div>
+              <div class="mb-2"><strong>College/Institute:</strong> Bicol University Polangui</div>
+            </div>
+
+            <div class="mb-3">
+              <div>RECEIVED from <strong>${studentName}</strong> the sum of <strong>TWO HUNDRED TWENTY pesos (P220)</strong></div>
+              <div class="mt-2">this <input type="checkbox" checked disabled style="margin-right: 0.5rem;"> 1st <input type="checkbox" checked disabled style="margin-right: 0.5rem;"> 2nd semester of Academic Year ${academicYear} as payment for:</div>
+            </div>
+
+            <div class="mb-3">
+              <div><input type="checkbox" checked disabled style="margin-right: 0.5rem;"> USC and CSC Fee</div>
+              <div><input type="checkbox" checked disabled style="margin-right: 0.5rem;"> Insurance Fee</div>
+              <div><input type="checkbox" checked disabled style="margin-right: 0.5rem;"> ID Validation Fee</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ___units of BU Seals</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ___units of BU Plates</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> Others- Please specify:_____________</div>
+            </div>
+
+            <div class="mt-4 mb-2">
+              <div class="text-end">
+                <div class="mb-4"><strong>${verifiedBy}</strong></div>
+                <div>COLLECTING OFFICER</div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-center text-muted small">
+              <strong>NOTE:</strong> THIS IS AN UNOFFICIAL ACKNOWLEGMENT RECEIPT. FOR AN OFFICIAL COPY, DIRECTLY CONTACT THE BICOL UNIVERSITY POLANGUI COLLEGE STUDENT COUNCIL TREASURER.
+            </div>
+          </div>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById("receiptModal"));
+        modal.show();
+      }
     </script>
   </body>
 </html>
-
-

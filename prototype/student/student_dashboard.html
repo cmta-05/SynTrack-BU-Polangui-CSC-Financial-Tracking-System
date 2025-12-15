@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Student Dashboard - CSC PayTrack</title>
+    <title>Student Dashboard - SynTrack</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap 5 -->
@@ -15,6 +15,19 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
     />
+    <!-- Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <!-- Favicon -->
     <link
       rel="icon"
@@ -23,17 +36,38 @@
     />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      /* Icon sizing */
+      .nav-link .material-icons,
+      .nav-link .material-symbols-outlined {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link i.fa-solid {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      .nav-link ion-icon {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link svg {
+        width: 22px;
+        height: 22px;
+        vertical-align: middle;
+      }
+    </style>
   </head>
   <body onload="initPage('student-dashboard')">
     <div class="app-shell">
       <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-brand">
-          <div class="logo-circle">
-            <img src="../assets/img/csc-paytrack-logo.png" alt="CSC PayTrack" />
+          <div class="sidebar-logo-wrapper">
+            <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack" class="sidebar-logo" />
           </div>
-          <div>
-            <div class="fw-bold">CSC PayTrack</div>
+          <div class="sidebar-brand-text">
+            <div class="fw-bold" style="font-size: 1.5rem;">SynTrack</div>
             <small>Student Portal</small>
           </div>
           <button
@@ -46,37 +80,40 @@
         </div>
         <div class="sidebar-label">Main Menu</div>
         <nav>
-          <a class="nav-link" href="student_dashboard.html">
-            <i class="bi bi-speedometer2"></i><span>Home</span>
+          <a class="nav-link active" href="student_dashboard.html">
+            <span>Dashboard</span>
           </a>
-          <a class="nav-link" href="student_history.html">
-            <i class="bi bi-receipt"></i><span>My CSC Fee</span>
+          <a class="nav-link" href="student_cscfee.html">
+            <span>CSC Fee</span>
           </a>
           <a class="nav-link" href="student_lanyards.html">
-            <i class="bi bi-credit-card-2-front"></i><span>Lanyards</span>
+            <span>Lanyards</span>
           </a>
           <a class="nav-link" href="student_pe_uniform.html">
-            <i class="bi bi-basket3"></i><span>PE Uniform</span>
+            <span>PE Uniform</span>
           </a>
           <a class="nav-link" href="student_seal_plate.html">
-            <i class="bi bi-patch-check"></i><span>Seal &amp; Plates</span>
+            <span>Seal &amp; Plates</span>
           </a>
           <a class="nav-link" href="student_merchandise.html">
-            <i class="bi bi-bag"></i><span>Merch Items</span>
+            <span>Merch Items</span>
           </a>
-          <a class="nav-link" href="student_dispute.html">
-            <i class="bi bi-chat-dots"></i><span>Payment Concerns</span>
+          <a class="nav-link" href="student_concerns.html">
+            <span>Concerns</span>
           </a>
         </nav>
+        <div class="sidebar-label-text">
+            Bicol University Polangui<br>
+            College Student Council<br>
+            Financial Tracking System
+        </div>
       </aside>
 
       <!-- Workspace -->
       <div class="workspace">
         <header class="topbar">
-          <div>
-            <div class="topbar-subtitle">
-              Bicol University Polangui - College Student Council
-            </div>
+          <div class="topbar-left">
+            <i class="bi bi-calendar3 topbar-date-icon"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">
@@ -90,10 +127,11 @@
             </button>
             <button
               type="button"
-              class="icon-btn"
+              class="icon-btn notification-btn"
               aria-label="Notifications"
               onclick="toggleNotifications()"
             >
+              <span class="notification-badge">1</span>
               🔔
             </button>
             <div class="user-menu">
@@ -102,31 +140,46 @@
                 onclick="toggleUserMenu()"
                 role="button"
               >
-                VR
+                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
                   <strong>JUAN DELA CRUZ</strong>
                   <div class="small text-muted">BSIT 3B</div>
                 </div>
-                <a href="../profile.html">Profile</a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal"
-                  >Manage Password</a
-                >
-                <a href="../faqs.html">FAQs</a>
-                <a href="../contact_admin.html">Contact Admin</a>
-                <a href="../feedback.html">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#faqsModal">FAQs</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
-                <div class="notification-item">
-                  Payment received for CSC Fee AY 2023–2024.
+                <div class="notification-item unread">
+                  <strong>Payment Verified</strong>
+                  <p>Your CSC Fee payment for AY 2025-2026 has been verified.</p>
+                  <small>2 hours ago</small>
                 </div>
                 <div class="notification-item">
-                  Merchandise order M-001 is ready for pickup.
+                  <strong>Order Ready</strong>
+                  <p>Your PE Uniform order is ready for pickup at the CSC Office.</p>
+                  <small>1 day ago</small>
                 </div>
                 <div class="notification-item">
-                  New response to your payment concern.
+                  <strong>Payment Received</strong>
+                  <p>Payment received for Lanyard purchase. Receipt ID: 19542</p>
+                  <small>2 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Concern Resolved</strong>
+                  <p>Your payment concern has been resolved by the Treasurer.</p>
+                  <small>3 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Reminder</strong>
+                  <p>Don't forget to submit your CSC Fee payment before the deadline.</p>
+                  <small>5 days ago</small>
                 </div>
               </div>
             </div>
@@ -168,24 +221,25 @@
             </div>
           </section>
 
-          <section class="reveal-on-scroll">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="mb-0">Modules &amp; Fees</h5>
-              <small class="text-muted">Click a card to view complete information.</small>
-            </div>
-            <div class="module-card-grid" id="moduleCardGrid"></div>
-            <p class="mt-2 text-muted small">
-              Click a card to view complete information.
-            </p>
-          </section>
-
           <section class="mt-4 reveal-on-scroll">
-            <div class="progress-status-card">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0">Module Status Overview</h5>
-                <small class="text-muted">Track progress across all requirements.</small>
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="progress-status-card">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Status Overview</h5>
+                    <small class="text-muted">Track progress across all requirements.</small>
+                  </div>
+                  <div id="moduleProgressList"></div>
+                </div>
               </div>
-              <div id="moduleProgressList"></div>
+              <div class="col-lg-6">
+                <div class="card h-100">
+                  <div class="card-header">Quick Reminders</div>
+                  <div class="card-body">
+                    <div class="row g-3" id="reminderGrid"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -222,103 +276,42 @@
           </section>
 
           <section class="mt-4 reveal-on-scroll">
-            <div class="row g-3">
-              <div class="col-lg-7">
-                <div class="card h-100">
-                  <div class="card-header">Quick Reminders</div>
-                  <div class="card-body">
-                    <div class="row g-3" id="reminderGrid"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-5">
-                <div class="tips-card h-100">
-                  <h5 class="mb-3">How to Use CSC PayTrack</h5>
-                  <ul id="tipsList"></ul>
-                </div>
-              </div>
+            <div class="tips-card">
+              <h5 class="mb-3">How to Use SynTrack</h5>
+              <ul id="tipsList"></ul>
             </div>
           </section>
         </div>
 
-        <!-- Manage Password Modal -->
-        <div
-          class="modal fade"
-          id="managePasswordModal"
-          tabindex="-1"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Manage Account Password</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <p class="meta-text">
-                  Changing your password here is for CSC PayTrack prototype
-                  only. No real accounts will be updated.
-                </p>
-                <div class="mb-3">
-                  <label class="form-label">Current Password *</label>
-                  <input type="password" class="form-control" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">New Password *</label>
-                  <input type="password" class="form-control" />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Confirm New Password *</label>
-                  <input type="password" class="form-control" />
-                </div>
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="showPwd" />
-                  <label class="form-check-label" for="showPwd">
-                    Show password
-                  </label>
-                </div>
-                <div class="meta-text">
-                  <strong>Required Password Format:</strong>
-                  <ul>
-                    <li>Must be 8 characters or more</li>
-                    <li>At least one uppercase character</li>
-                    <li>At least one lowercase character</li>
-                    <li>At least one number</li>
-                    <li>At least one symbol</li>
-                    <li>Passwords must match</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Cancel
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Include all modals from common_modals.html -->
+        <div id="commonModals"></div>
 
         <footer class="app-footer">
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span
-              >CSC PayTrack · Bicol University Polangui - College Student
-              Council</span
-            >
-            <span class="meta-text">
-              Prototype UI · For academic purposes only
-            </span>
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <div class="mb-2">
+                  <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                    <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+                  </a>
+                </div>
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
@@ -332,7 +325,33 @@
     <script src="../assets/js/data.js"></script>
     <script src="../assets/js/forms.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/modals.js"></script>
     <script>
+      // Load common modals
+      fetch('../student/common_modals.html')
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load modals');
+          return r.text();
+        })
+        .then(html => {
+          const container = document.getElementById('commonModals');
+          if (container) {
+            container.innerHTML = html;
+            setTimeout(() => {
+              if (typeof initializeModals === 'function') {
+                initializeModals();
+              }
+            }, 100);
+          }
+        })
+        .catch(err => {
+          console.error('Error loading modals:', err);
+          const container = document.getElementById('commonModals');
+          if (container) {
+            container.innerHTML = '';
+          }
+        });
+
       document.addEventListener("DOMContentLoaded", () => {
         applyStoredTheme();
         startClock("currentDateTime");

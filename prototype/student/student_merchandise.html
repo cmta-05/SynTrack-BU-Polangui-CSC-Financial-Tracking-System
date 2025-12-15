@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>My Merchandise Orders - CSC PayTrack</title>
+    <title>Merch Items - SynTrack</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap -->
@@ -10,22 +10,61 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <!-- Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link
       rel="icon"
       type="image/png"
       href="../assets/img/csc-paytrack-logo.png"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      /* Icon sizing */
+      .nav-link .material-icons,
+      .nav-link .material-symbols-outlined {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link i.fa-solid {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      .nav-link ion-icon {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link svg {
+        width: 22px;
+        height: 22px;
+        vertical-align: middle;
+      }
+    </style>
   </head>
   <body onload="initPage('student-merchandise')">
     <div class="app-shell">
       <aside class="sidebar">
         <div class="sidebar-brand">
-          <div class="logo-circle">
-            <img src="../assets/img/csc-paytrack-logo.png" alt="CSC PayTrack" />
+          <div class="sidebar-logo-wrapper">
+            <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack" class="sidebar-logo" />
           </div>
-          <div>
-            <div class="fw-bold">CSC PayTrack</div>
+          <div class="sidebar-brand-text">
+            <div class="fw-bold" style="font-size: 1.5rem;">SynTrack</div>
             <small>Student Portal</small>
           </div>
           <button
@@ -39,36 +78,38 @@
         <div class="sidebar-label">Main Menu</div>
         <nav>
           <a class="nav-link" href="student_dashboard.html">
-            <i class="bi bi-speedometer2"></i><span>Home</span>
+            <span>Dashboard</span>
           </a>
-          <a class="nav-link" href="student_history.html">
-            <i class="bi bi-receipt"></i><span>My CSC Fee</span>
+          <a class="nav-link" href="student_cscfee.html">
+            <span>CSC Fee</span>
           </a>
           <a class="nav-link" href="student_lanyards.html">
-            <i class="bi bi-credit-card-2-front"></i><span>Lanyards</span>
+            <span>Lanyards</span>
           </a>
           <a class="nav-link" href="student_pe_uniform.html">
-            <i class="bi bi-basket3"></i><span>PE Uniform</span>
+            <span>PE Uniform</span>
           </a>
           <a class="nav-link" href="student_seal_plate.html">
-            <i class="bi bi-patch-check"></i><span>Seal &amp; Plates</span>
+            <span>Seal &amp; Plates</span>
           </a>
-          <a class="nav-link" href="student_merchandise.html">
-            <i class="bi bi-bag"></i><span>Merch Items</span>
+          <a class="nav-link active" href="student_merchandise.html">
+            <span>Merch Items</span>
           </a>
-          <a class="nav-link" href="student_dispute.html">
-            <i class="bi bi-chat-dots"></i><span>Payment Concerns</span>
+          <a class="nav-link" href="student_concerns.html">
+            <span>Concerns</span>
           </a>
         </nav>
+        <div class="sidebar-label-text">
+          Bicol University Polangui<br>
+          College Student Council<br>
+          Financial Tracking System
+        </div>
       </aside>
 
       <div class="workspace">
         <header class="topbar">
-          <div>
-            <div class="topbar-title">CSC PayTrack</div>
-            <div class="topbar-subtitle">
-              Bicol University Polangui - College Student Council
-            </div>
+          <div class="topbar-left">
+            <i class="bi bi-calendar3 topbar-date-icon"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">
@@ -82,10 +123,11 @@
             </button>
             <button
               type="button"
-              class="icon-btn"
+              class="icon-btn notification-btn"
               aria-label="Notifications"
               onclick="toggleNotifications()"
             >
+              <span class="notification-badge">1</span>
               🔔
             </button>
             <div class="user-menu">
@@ -94,31 +136,46 @@
                 onclick="toggleUserMenu()"
                 role="button"
               >
-                VR
+                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
-                  <strong>VANNESA ROSE B.</strong>
-                  <div class="small text-muted">BSIT | 3rd Year</div>
+                  <strong>JUAN DELA CRUZ</strong>
+                  <div class="small text-muted">BSIT 3B</div>
                 </div>
-                <a href="../profile.html">Profile</a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal"
-                  >Manage Password</a
-                >
-                <a href="../faqs.html">FAQs</a>
-                <a href="../contact_admin.html">Contact Admin</a>
-                <a href="../feedback.html">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#faqsModal">FAQs</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
-                <div class="notification-item">
-                  Payment received for CSC Fee AY 2023–2024.
+                <div class="notification-item unread">
+                  <strong>Payment Verified</strong>
+                  <p>Your CSC Fee payment for AY 2025-2026 has been verified.</p>
+                  <small>2 hours ago</small>
                 </div>
                 <div class="notification-item">
-                  Merchandise order M-001 is ready for pickup.
+                  <strong>Order Ready</strong>
+                  <p>Your PE Uniform order is ready for pickup at the CSC Office.</p>
+                  <small>1 day ago</small>
                 </div>
                 <div class="notification-item">
-                  New response to your payment concern.
+                  <strong>Payment Received</strong>
+                  <p>Payment received for Lanyard purchase. Receipt ID: 19542</p>
+                  <small>2 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Concern Resolved</strong>
+                  <p>Your payment concern has been resolved by the Treasurer.</p>
+                  <small>3 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Reminder</strong>
+                  <p>Don't forget to submit your CSC Fee payment before the deadline.</p>
+                  <small>5 days ago</small>
                 </div>
               </div>
             </div>
@@ -126,106 +183,319 @@
         </header>
 
         <div class="page-content">
-          <div class="page-header">
-            <h2 class="fw-bold mb-1">Merch Items</h2>
-            <p class="placeholder-note mb-2">
-              Browse CSC shirts and special-event merchandise, and track the
-              status of your own orders.
+          <div class="page-header mb-4">
+            <h2 class="fw-bold mb-2">MERCH ITEMS</h2>
+            <p class="mb-0">
+              Browse CSC shirts and special-event merchandise, and track the status of your own orders.
             </p>
-            <button
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              onclick="alert('Merch items information is illustrative only.')"
-            >
-              View Merch Items Info
-            </button>
           </div>
 
-          <div class="row g-3">
-            <div class="col-lg-5">
-              <div class="card h-100">
-                <div class="card-header">Merchandise Display (Prototype)</div>
-                <div class="card-body">
-                  <p class="mb-1">
-                    • CSC T-shirts and jackets related to official events.
-                  </p>
-                  <p class="mb-1">
-                    • Sizes and price per design configured by the Business
-                    Manager.
-                  </p>
-                  <p class="mb-3">
-                    • Pre-order and on-hand availability periods announced per
-                    semester.
-                  </p>
-                  <p class="placeholder-note mb-0">
-                    In the live system, this panel will show cards with actual
-                    merch photos, prices, and size availability.
-                  </p>
+          <!-- Merchandise Display -->
+          <section class="mb-4">
+            <div class="row g-4 mb-4">
+              <!-- Left Section: Title & Pictures -->
+              <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-header bg-gradient" style="background: linear-gradient(135deg, var(--color-orange) 0%, #ff6b6b 100%); color: white !important; font-weight: 600;">
+                    <i class="bi bi-images me-2"></i><span style="color: white !important;">Bicol University Polangui 2025 Intramurals Jersey</span>
+                  </div>
+                  <div class="card-body p-0">
+                    <div id="merchCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="../assets/img/merch1.jpg" class="d-block w-100" alt="Merch 1" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch1.jpg', '2025 Intramurals Jersey 1')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch2.jpg" class="d-block w-100" alt="Merch 2" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch2.jpg', '2025 Intramurals Jersey 2')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch3.jpg" class="d-block w-100" alt="Merch 3" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch3.jpg', '2025 Intramurals Jersey 3')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch4.jpg" class="d-block w-100" alt="Merch 4" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch4.jpg', '2025 Intramurals Jersey 4')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch5.jpg" class="d-block w-100" alt="Merch 5" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch5.jpg', '2025 Intramurals Jersey 5')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch6.jpg" class="d-block w-100" alt="Merch 6" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch6.jpg', '2025 Intramurals Jersey 6')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch7.jpg" class="d-block w-100" alt="Merch 7" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch7.jpg', '2025 Intramurals Jersey 7')" />
+                        </div>
+                        <div class="carousel-item">
+                          <img src="../assets/img/merch8.jpg" class="d-block w-100" alt="Merch 8" style="height: 400px; object-fit: cover; cursor: pointer;" onclick="openImageModal('../assets/img/merch8.jpg', '2025 Intramurals Jersey 8')" />
+                        </div>
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#merchCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#merchCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                      <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                        <button type="button" data-bs-target="#merchCarousel" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Right Section: Price & Available Sizes -->
+              <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-header bg-gradient" style="background: linear-gradient(135deg, var(--color-orange) 0%, #ff6b6b 100%); color: white !important; font-weight: 600;">
+                    <i class="bi bi-tag-fill me-2"></i><span style="color: white !important;">Price & Available Sizes</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-currency-exchange me-2" style="font-size: 1.5rem; color: var(--color-orange);"></i>
+                        <div>
+                          <div class="text-muted small">Price</div>
+                          <div class="h4 mb-0 fw-bold" style="color: var(--color-orange);">₱300.00</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="text-muted small mb-3">
+                        <i class="bi bi-info-circle me-1"></i>Available Sizes
+                      </div>
+                      <div class="d-flex flex-wrap gap-2">
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">XS</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">S</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">M</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">L</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">XL</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">2XL</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- Guidelines Section Below -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card shadow-sm">
+                  <div class="card-header">
+                    <div class="accordion" id="merchGuidelinesAccordion">
+                      <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuidelines" style="background: linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%); font-weight: 600;">
+                            <i class="bi bi-info-circle me-2"></i>Guidelines
+                          </button>
+                        </h2>
+                        <div id="collapseGuidelines" class="accordion-collapse collapse" data-bs-parent="#merchGuidelinesAccordion">
+                          <div class="accordion-body">
+                            <ul class="mb-0">
+                              <li>Jerseys are exclusive for BU Polangui students, faculty, and staff.</li>
+                              <li>Customization of names &amp; numbers allowed (avoid duplicates in the same team).</li>
+                              <li>First-years are highly encouraged to purchase since this will serve as their attire during Yugyog.</li>
+                              <li>Block Business Managers must submit two copies of order list (sizes + remittance list) and may keep a photo copy for record.</li>
+                              <li>No partial payments—only full remittance will be accepted.</li>
+                              <li>Upon payment, students will receive an official receipt/remittance slip, which must be presented during claiming.</li>
+                              <li>Claiming of jerseys will only be done by the Block President or Block Business Manager (or authorized representative with notice).</li>
+                              <li>Jerseys will be cross-checked on-site for size &amp; quantity.</li>
+                              <li>Damaged jerseys caused by CSC/supplier must be reported immediately for replacement. Damages after claiming will not be replaced.</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
-            <div class="col-lg-4">
-              <div class="card h-100">
-                <div class="card-header d-flex justify-content-between">
-                  <span>Your Orders</span>
-                  <button class="btn btn-sm btn-outline-primary" type="button">
-                    Export (Mock)
+          <!-- Accordion Sections -->
+          <section class="mb-4">
+            <div class="accordion" id="merchAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHowToOrder">
+                    How to order:
                   </button>
-                </div>
-                <div class="card-body table-wrapper">
-                  <table
-                    class="table table-striped table-bordered table-sm table-hover"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Receipt ID</th>
-                        <th>Item</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="studentMerchTableBody"></tbody>
-                  </table>
+                </h2>
+                <div id="collapseHowToOrder" class="accordion-collapse collapse show" data-bs-parent="#merchAccordion">
+                  <div class="accordion-body">
+                    <ol class="mb-0">
+                      <li>Check the Merch Items Section in SynTrack for the available sizes, designs, price, and stock status.</li>
+                      <li>Inform your Block Treasurer of your selected size/design and submit your cash payment.</li>
+                      <li>Wait for your official receipt from the Block Treasurer.</li>
+                      <li>The CSC Business Manager records and verifies your order in SynTrack:
+                        <ul>
+                          <li>Order Status: Placed – Pending Payment Verification</li>
+                          <li>Order Status: Paid &amp; Verified</li>
+                          <li>Order Status: In Process / Preparing Item (for items being prepared or printed)</li>
+                          <li>Order Status: Ready for Pickup</li>
+                        </ul>
+                      </li>
+                      <li>Check your notifications for updates on order verification and pickup.</li>
+                      <li>Always have your official receipt and Student ID ready for claiming.</li>
+                      <li>Claim your jersey during the announced pickup schedule at the CSC Office or designated area. In some cases, the Block Treasurer may be authorized to claim all Jerseys for the block, depending on official CSC instructions.</li>
+                      <li>Done! Your order is complete. You may return to this section anytime to view your order and payment history.</li>
+                    </ol>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div class="col-lg-3">
-              <div class="card h-100">
-                <div class="card-header">Announcements</div>
-                <div class="card-body">
-                  <p class="mb-1">
-                    • Special event shirts and merch drops will be posted here.
-                  </p>
-                  <p class="mb-1">
-                    • Pre-order cutoffs and pickup reminders appear in this
-                    panel.
-                  </p>
-                  <p class="placeholder-note mb-0">
-                    This is a static prototype; announcements are described
-                    only, not dynamically loaded.
-                  </p>
+          <!-- Current Order Update -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">YOUR CURRENT ORDER UPDATE</h4>
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-2">
+                  <div class="col-md-6"><strong>Order ID:</strong> M-001</div>
+                  <div class="col-md-6"><strong>Status:</strong> <span class="badge bg-success">Ready for Pickup</span></div>
                 </div>
+                <div class="row mb-2">
+                  <div class="col-md-6"><strong>Item:</strong> 2025 Intramurals Jersey (Size M)</div>
+                  <div class="col-md-6"><strong>Date Ordered:</strong> 2025-01-15</div>
+                </div>
+                <p class="mb-0"><strong>Note:</strong> Your jersey is ready for pickup at the CSC Office. Please bring your Student ID and official receipt.</p>
               </div>
             </div>
-          </div>
+          </section>
+
+          <!-- Order History -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">Order History</h4>
+            <div class="card">
+              <div class="card-body table-wrapper">
+                <table class="table table-striped table-bordered table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Sem & AY</th>
+                      <th>Item</th>
+                      <th>Amount</th>
+                      <th>View Unofficial Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody id="merchHistoryTableBody">
+                    <tr>
+                      <td>2025-01-15</td>
+                      <td>2nd Sem 2024-2025</td>
+                      <td>2025 Intramurals Jersey (Size M)</td>
+                      <td>₱300.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewMerchReceipt('M-001', '2025-01-15', '2nd Sem 2024-2025', 'Jersey')">View Receipt</button></td>
+                    </tr>
+                    <tr>
+                      <td>2024-11-20</td>
+                      <td>1st Sem 2024-2025</td>
+                      <td>2024 Intramurals Jersey (Size M)</td>
+                      <td>₱300.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewMerchReceipt('M-002', '2024-11-20', '1st Sem 2024-2025', 'Jersey')">View Receipt</button></td>
+                    </tr>
+                    <tr>
+                      <td>2024-03-25</td>
+                      <td>2nd Sem 2023-2024</td>
+                      <td>2024 Intramurals Jersey (Size M)</td>
+                      <td>₱300.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewMerchReceipt('M-003', '2024-03-25', '2nd Sem 2023-2024', 'Jersey')">View Receipt</button></td>
+                    </tr>
+                    <tr>
+                      <td>2023-11-15</td>
+                      <td>1st Sem 2023-2024</td>
+                      <td>2023 Intramurals Jersey (Size M)</td>
+                      <td>₱300.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewMerchReceipt('M-004', '2023-11-15', '1st Sem 2023-2024', 'Jersey')">View Receipt</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Announcements -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">Announcements</h4>
+            <div class="card">
+              <div class="card-body">
+                <p class="mb-2">• Special event shirts and merch drops will be posted here.</p>
+                <p class="mb-2">• Pre-order cutoffs and pickup reminders appear in this panel.</p>
+                <p class="mb-0"><strong>Important:</strong> No cancellation once payment is confirmed. Only paid orders are reserved for pickup. Bring ID + receipt when claiming to avoid disputes.</p>
+              </div>
+            </div>
+          </section>
         </div>
 
         <footer class="app-footer">
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span
-              >CSC PayTrack · Bicol University Polangui - College Student
-              Council</span
-            >
-            <span class="meta-text">
-              Prototype UI · For academic purposes only
-            </span>
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <div class="mb-2">
+                  <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                    <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+                  </a>
+                </div>
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
     </div>
+
+    <!-- Image Fullscreen Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-dark">
+          <div class="modal-header border-0">
+            <h5 class="modal-title text-white" id="imageModalTitle">Image</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex align-items-center justify-content-center p-0">
+            <img id="imageModalImg" src="" alt="Fullscreen Image" class="img-fluid" style="max-height: 100vh; max-width: 100%; object-fit: contain;" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Unofficial Acknowledgment Receipt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="receiptModalBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include all modals from dashboard -->
+    <div id="commonModals"></div>
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -233,14 +503,103 @@
     <script src="../assets/js/data.js"></script>
     <script src="../assets/js/forms.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/modals.js"></script>
     <script>
+      // Load common modals
+      fetch('../student/common_modals.html')
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load modals');
+          return r.text();
+        })
+        .then(html => {
+          const container = document.getElementById('commonModals');
+          if (container) {
+            container.innerHTML = html;
+            setTimeout(() => {
+              if (typeof initializeModals === 'function') {
+                initializeModals();
+              }
+            }, 100);
+          }
+        })
+        .catch(err => {
+          console.error('Error loading modals:', err);
+          const container = document.getElementById('commonModals');
+          if (container) {
+            container.innerHTML = '';
+          }
+        });
+
+      function openImageModal(imageSrc, title) {
+        document.getElementById('imageModalImg').src = imageSrc;
+        document.getElementById('imageModalTitle').textContent = title;
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+      }
+
+      function viewMerchReceipt(receiptId, date, semAy, item) {
+        const modalBody = document.getElementById("receiptModalBody");
+        const studentName = "JUAN DELA CRUZ";
+        
+        modalBody.innerHTML = `
+          <div class="receipt-container" style="border: 2px solid #000; padding: 2rem; font-family: Arial, sans-serif;">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
+                <div class="mb-2"><strong>BICOL UNIVERSITY</strong></div>
+                <div>University Student Council</div>
+                <div>Daraga, Albay</div>
+              </div>
+              <div class="text-end">
+                <div><strong>No ${receiptId}</strong></div>
+              </div>
+            </div>
+            
+            <div class="text-center mb-4">
+              <h4 class="fw-bold">OFFICIAL ACKNOWLEDGMENT RECEIPT</h4>
+            </div>
+
+            <div class="mb-3">
+              <div class="mb-2"><strong>Date:</strong> ${date}</div>
+              <div class="mb-2"><strong>College/Institute:</strong> Bicol University Polangui</div>
+            </div>
+
+            <div class="mb-3">
+              <div>RECEIVED from <strong>${studentName}</strong> the sum of <strong>THREE HUNDRED pesos (P300)</strong></div>
+              <div class="mt-2">this ${semAy} as payment for:</div>
+            </div>
+
+            <div class="mb-3">
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> USC and CSC Fee</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> Insurance Fee</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ID Validation Fee</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> Lanyard</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ___units of BU Seals</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ___units of BU Plates</div>
+              <div><input type="checkbox" checked disabled style="margin-right: 0.5rem;"> ${item}</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> Others- Please specify:_____________</div>
+            </div>
+
+            <div class="mt-4 mb-2">
+              <div class="text-end">
+                <div class="mb-4"><strong>CSC BUSINESS MANAGER</strong></div>
+                <div>COLLECTING OFFICER</div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-center text-muted small">
+              <strong>NOTE:</strong> THIS IS AN UNOFFICIAL ACKNOWLEGMENT RECEIPT. FOR AN OFFICIAL COPY, DIRECTLY CONTACT THE BICOL UNIVERSITY POLANGUI COLLEGE STUDENT COUNCIL TREASURER.
+            </div>
+          </div>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById("receiptModal"));
+        modal.show();
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
         applyStoredTheme();
         startClock("currentDateTime");
-        loadStudentMerchandise();
       });
     </script>
   </body>
 </html>
-
-

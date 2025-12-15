@@ -78,24 +78,38 @@ const dashboardDeadlines = [
 ];
 
 const dashboardTips = [
-  "Upload a clear receipt photo when filing concerns.",
-  "Check module status bars weekly for pending requirements.",
-  "Use the info pages to review policies before pickups.",
-  "Contact CSC officers early if a payment is missing.",
+  "Step 1: Review Your Dashboard - Start by checking your dashboard to see: Information You Need to Know, Current Transaction Status, Upcoming Deadlines, Quick Reminders",
+  "Step 2: Select a Section - Open the section you need to complete from the side main menu bar: CSC Fees, Lanyards, PE Uniforms, Seal & Plate, or Merch Items.",
+  "Step 3: Complete the Required Action - Stay updated, track your progress, and follow the instructions shown in the selected section.",
+  "Step 4: Stay Updated on Your Transactions - After every physical payment transaction, you will receive a notification showing your current transaction status. This helps you stay updated, avoid losing access, and prevent forgetting any transactions within the College Student Council.",
+  "Step 5: Submit a Concern if Needed - If an issue arises (missing payment, incorrect amount posted, not yet verified, or wrong section posted), use the Concern feature to formally report the problem.",
+  "Step 6: Exit Safely - End your session properly to keep your account secure.",
 ];
 
 const dashboardReminders = [
   {
-    title: "Keep Proofs Ready",
-    body: "Take photos of every payment receipt for faster verification.",
+    title: "Prepare Payment Proofs",
+    body: "Always keep clear photos of official receipts after every transaction.",
   },
   {
-    title: "Watch Stock Notices",
-    body: "Lanyards, seal & plates, and merch drop announcements happen in batches.",
+    title: "Monitor Your Account Status",
+    body: "Visit your dashboard regularly to track updates on submitted payments.",
   },
   {
-    title: "Pickup Etiquette",
-    body: "Bring your ID and proof of payment when claiming PE uniforms or merch.",
+    title: "Follow Posted Schedules",
+    body: "Late submissions may delay verification and item claiming.",
+  },
+  {
+    title: "Watch for System Updates",
+    body: "Important notices and alerts appear on your dashboard.",
+  },
+  {
+    title: "Report Concerns Promptly",
+    body: "Early reporting helps avoid longer processing time.",
+  },
+  {
+    title: "Secure Your Account",
+    body: "Always log out after using SynTrack on shared devices.",
   },
 ];
 
@@ -266,13 +280,28 @@ function renderTipsList() {
   const list = document.getElementById("tipsList");
   if (!list) return;
   list.innerHTML = "";
-  dashboardTips.forEach((tip) => {
+  dashboardTips.forEach((tip, index) => {
     const li = document.createElement("li");
-    li.textContent = tip;
+    // Extract step number and content
+    const stepMatch = tip.match(/^Step (\d+):\s*(.+)$/);
+    if (stepMatch) {
+      const stepNum = stepMatch[1];
+      const content = stepMatch[2];
+      li.innerHTML = `<strong>Step ${stepNum}:</strong> ${content}`;
+    } else {
+      li.textContent = tip;
+    }
+    li.style.opacity = "0";
+    li.style.transform = "translateY(10px)";
+    setTimeout(() => {
+      li.style.transition = "all 0.4s ease";
+      li.style.opacity = "1";
+      li.style.transform = "translateY(0)";
+    }, index * 100);
     list.appendChild(li);
   });
 }
-// CSC Financial Tracking and Payment Management System - Frontend Prototype
+// SynTrack – Bicol University Polangui College Student Council Financial Tracking System - Frontend Prototype
 // NOTE: No backend — all data is static and comes from in-memory JS arrays in data.js.
 
 // Simple navigation helper
@@ -337,16 +366,20 @@ function startClock(elementId) {
 
   function update() {
     const now = new Date();
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    el.textContent = now.toLocaleString(undefined, options);
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const weekday = weekdays[now.getDay()];
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const year = now.getFullYear();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    hours = String(hours).padStart(2, '0');
+    
+    el.textContent = `${weekday}, ${month}/${day}/${year}, ${hours}:${minutes}:${seconds} ${ampm}`;
   }
 
   update();
@@ -377,32 +410,22 @@ function renderAnnouncements(containerId) {
 
 const loginAccounts = {
   "2023-9135-16062": {
-    password: "CSCPayTrack1",
+    password: "SynTrack1",
     role: "student",
     name: "VANNESA ROSE B.",
   },
   "csctreasurer@gmail.com": {
-    password: "CSCPayTrack2",
+    password: "SynTrack2",
     role: "treasurer",
     name: "CSC Treasurer",
   },
   "cscbm@gmail.com": {
-    password: "CSCPayTrack3",
+    password: "SynTrack3",
     role: "bm",
     name: "CSC Business Manager",
   },
-  "cscauditor@gmail.com": {
-    password: "CSCPayTrack4",
-    role: "auditor",
-    name: "CSC Auditor",
-  },
-  "cscpresident@gmail.com": {
-    password: "CSCPayTrack1",
-    role: "president",
-    name: "CSC President",
-  },
   "admin@gmail.com": {
-    password: "CSCPayTrack",
+    password: "SynTrack",
     role: "admin",
     name: "System Admin",
   },
@@ -457,12 +480,6 @@ function handleLoginSubmit(event) {
       break;
     case "bm":
       target = "bm/bm_dashboard.html";
-      break;
-    case "auditor":
-      target = "auditor/auditor_dashboard.html";
-      break;
-    case "president":
-      target = "president/president_dashboard.html";
       break;
     case "admin":
       target = "admin/admin_dashboard.html";
@@ -566,7 +583,6 @@ function loadStudentDashboard() {
     summaryAy.textContent = latest?.academicYear || "2024-2025";
   }
 
-  renderModuleCards();
   renderModuleProgress();
   renderUpcomingDeadlines();
   renderQuickReminders();
@@ -1272,103 +1288,8 @@ function loadBmReports() {
 }
 
 // ===============================
-// AUDITOR, PRESIDENT, ADMIN
+// ADMIN
 // ===============================
-
-function loadAuditorDashboard() {
-  if (typeof Chart !== "undefined") {
-    const collCtx = document.getElementById("auditorCollectionChart");
-    if (collCtx) {
-      const agg = aggregateByMonth(cscFeePayments, "amount", "date");
-      new Chart(collCtx, {
-        type: "line",
-        data: {
-          labels: agg.labels,
-          datasets: [
-            {
-              label: "CSC Collections",
-              data: agg.values,
-              borderColor: "#22c55e",
-            },
-          ],
-        },
-      });
-    }
-
-    const disputeCtx = document.getElementById("auditorDisputeChart");
-    if (disputeCtx) {
-      const statusCounts = {};
-      disputes.forEach((d) => {
-        statusCounts[d.status] = (statusCounts[d.status] || 0) + 1;
-      });
-      const labels = Object.keys(statusCounts);
-      const values = labels.map((k) => statusCounts[k]);
-
-      new Chart(disputeCtx, {
-        type: "doughnut",
-        data: {
-          labels,
-          datasets: [
-            {
-              data: values,
-              backgroundColor: ["#f97316", "#22c55e", "#ef4444"],
-            },
-          ],
-        },
-      });
-    }
-  }
-
-  const rows = [
-    {
-      date: "2025-02-02",
-      module: "Treasurer",
-      action: "Verified CSC-001",
-      performedBy: "Treasurer User (mock)",
-    },
-  ];
-  renderTable("auditorAuditTableBody", rows, [
-    "date",
-    "module",
-    "action",
-    "performedBy",
-  ]);
-}
-
-function loadPresidentDashboard() {
-  const totalCollections = cscFeePayments.reduce(
-    (s, p) => s + Number(p.amount || 0),
-    0,
-  );
-  const merchandiseTotal =
-    merchandiseOrders.reduce((s, o) => s + Number(o.amount || 0), 0) +
-    peUniformOrders.reduce((s, o) => s + Number(o.amount || 0), 0) +
-    sealPlateRequests.reduce((s, o) => s + Number(o.amount || 0), 0) +
-    idLaceRequests.reduce((s, o) => s + Number(o.amount || 0), 0);
-
-  if (typeof Chart !== "undefined") {
-    const ctx = document.getElementById("presidentSnapshotChart");
-    if (ctx) {
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: ["CSC Fees", "BM Revenues"],
-          datasets: [
-            {
-              label: "Amount (₱)",
-              data: [totalCollections, merchandiseTotal],
-              backgroundColor: ["#2563eb88", "#16a34a88"],
-              borderColor: ["#2563eb", "#16a34a"],
-            },
-          ],
-        },
-      });
-    }
-  }
-
-  const countC = document.getElementById("countPresidentCSC");
-  if (countC) countC.innerText = cscFeePayments.length.toString();
-}
 
 function loadAdminDashboard() {
   const rows = [

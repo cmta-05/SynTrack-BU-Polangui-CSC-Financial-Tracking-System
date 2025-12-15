@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>PE Uniform - CSC PayTrack</title>
+    <title>PE Uniform - SynTrack</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap -->
@@ -10,17 +10,61 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <!-- Google Material Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/img/csc-paytrack-logo.png"
+    />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      /* Icon sizing */
+      .nav-link .material-icons,
+      .nav-link .material-symbols-outlined {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link i.fa-solid {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      .nav-link ion-icon {
+        font-size: 22px;
+        vertical-align: middle;
+      }
+      .nav-link svg {
+        width: 22px;
+        height: 22px;
+        vertical-align: middle;
+      }
+    </style>
   </head>
   <body onload="initPage('student-pe-uniform')">
     <div class="app-shell">
       <aside class="sidebar">
         <div class="sidebar-brand">
-          <div class="logo-circle">
-            <img src="../assets/img/csc-paytrack-logo.png" alt="CSC PayTrack" />
+          <div class="sidebar-logo-wrapper">
+            <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack" class="sidebar-logo" />
           </div>
-          <div>
-            <div class="fw-bold">CSC PayTrack</div>
+          <div class="sidebar-brand-text">
+            <div class="fw-bold" style="font-size: 1.5rem;">SynTrack</div>
             <small>Student Portal</small>
           </div>
           <button
@@ -34,36 +78,38 @@
         <div class="sidebar-label">Main Menu</div>
         <nav>
           <a class="nav-link" href="student_dashboard.html">
-            <i class="bi bi-speedometer2"></i><span>Home</span>
+            <span>Dashboard</span>
           </a>
-          <a class="nav-link" href="student_history.html">
-            <i class="bi bi-receipt"></i><span>My CSC Fee</span>
+          <a class="nav-link" href="student_cscfee.html">
+            <span>CSC Fee</span>
           </a>
           <a class="nav-link" href="student_lanyards.html">
-            <i class="bi bi-credit-card-2-front"></i><span>Lanyards</span>
+            <span>Lanyards</span>
           </a>
-          <a class="nav-link" href="student_pe_uniform.html">
-            <i class="bi bi-basket3"></i><span>PE Uniform</span>
+          <a class="nav-link active" href="student_pe_uniform.html">
+            <span>PE Uniform</span>
           </a>
           <a class="nav-link" href="student_seal_plate.html">
-            <i class="bi bi-patch-check"></i><span>Seal &amp; Plates</span>
+            <span>Seal &amp; Plates</span>
           </a>
           <a class="nav-link" href="student_merchandise.html">
-            <i class="bi bi-bag"></i><span>Merch Items</span>
+            <span>Merch Items</span>
           </a>
-          <a class="nav-link" href="student_dispute.html">
-            <i class="bi bi-chat-dots"></i><span>Payment Concerns</span>
+          <a class="nav-link" href="student_concerns.html">
+            <span>Concerns</span>
           </a>
         </nav>
+        <div class="sidebar-label-text">
+          Bicol University Polangui<br>
+          College Student Council<br>
+          Financial Tracking System
+        </div>
       </aside>
 
       <div class="workspace">
         <header class="topbar">
-          <div>
-            <div class="topbar-title">CSC PayTrack</div>
-            <div class="topbar-subtitle">
-              Bicol University Polangui - College Student Council
-            </div>
+          <div class="topbar-left">
+            <i class="bi bi-calendar3 topbar-date-icon"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">
@@ -77,47 +123,59 @@
             </button>
             <button
               type="button"
-              class="icon-btn"
+              class="icon-btn notification-btn"
               aria-label="Notifications"
               onclick="toggleNotifications()"
             >
+              <span class="notification-badge">1</span>
               🔔
             </button>
             <div class="user-menu">
               <div
                 class="user-avatar"
-                onclick="toggleUserMenu()
-"
+                onclick="toggleUserMenu()"
                 role="button"
               >
-                VR
+                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
-                  <strong>VANNESA ROSE B.</strong>
-                  <div class="small text-muted">BSIT | 3rd Year</div>
+                  <strong>JUAN DELA CRUZ</strong>
+                  <div class="small text-muted">BSIT 3B</div>
                 </div>
-                <a href="../profile.html">Profile</a>
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#managePasswordModal"
-                  >Manage Password</a
-                >
-                <a href="../faqs.html">FAQs</a>
-                <a href="../contact_admin.html">Contact Admin</a>
-                <a href="../feedback.html">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#faqsModal">FAQs</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
-                <div class="notification-item">
-                  Payment received for CSC Fee AY 2023–2024.
+                <div class="notification-item unread">
+                  <strong>Payment Verified</strong>
+                  <p>Your CSC Fee payment for AY 2025-2026 has been verified.</p>
+                  <small>2 hours ago</small>
                 </div>
                 <div class="notification-item">
-                  Merchandise order M-001 is ready for pickup.
+                  <strong>Order Ready</strong>
+                  <p>Your PE Uniform order is ready for pickup at the CSC Office.</p>
+                  <small>1 day ago</small>
                 </div>
                 <div class="notification-item">
-                  New response to your payment concern.
+                  <strong>Payment Received</strong>
+                  <p>Payment received for Lanyard purchase. Receipt ID: 19542</p>
+                  <small>2 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Concern Resolved</strong>
+                  <p>Your payment concern has been resolved by the Treasurer.</p>
+                  <small>3 days ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Reminder</strong>
+                  <p>Don't forget to submit your CSC Fee payment before the deadline.</p>
+                  <small>5 days ago</small>
                 </div>
               </div>
             </div>
@@ -125,115 +183,239 @@
         </header>
 
         <div class="page-content">
-          <div class="page-header">
-            <h2 class="fw-bold mb-1">PE Uniform</h2>
-            <p class="placeholder-note mb-2">
-              Review the official PE uniform policy, available sizes, and the
-              status of your PE uniform orders.
+          <div class="page-header mb-4">
+            <h2 class="fw-bold mb-2">BICOL UNIVERSITY PE UNIFORM</h2>
+            <p class="mb-0">
+              View the official PE uniform design, available sizes, and the status of your PE uniform orders.
             </p>
-            <button
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              onclick="alert('Informational content only in this prototype.')"
-            >
-              View PE Uniform Info
-            </button>
           </div>
 
-          <div class="row g-3">
-            <div class="col-lg-4">
-              <div class="card h-100">
-                <div class="card-header">Official PE Uniform</div>
-                <div class="card-body">
-                  <p class="mb-2">
-                    <strong>Design:</strong> BU Polangui CSC Official PE Shirt
-                    and Jogging Pants
-                  </p>
-                  <p class="mb-2">
-                    <strong>Available Sizes:</strong> XS – XXL
-                  </p>
-                  <p class="mb-2">
-                    <strong>Guidelines:</strong> Wear only during official PE
-                    classes and follow campus dress code.
-                  </p>
-                  <p class="meta-text mb-0">
-                    Sizing charts and pickup guidelines will be displayed here
-                    once provided by the CSC Business Manager.
-                  </p>
+          <!-- Official PE Uniform Design -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">OFFICIAL PE UNIFORM DESIGN</h4>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                  <div class="card-header bg-gradient" style="background: linear-gradient(135deg, var(--color-orange) 0%, #ff6b6b 100%); color: white !important; font-weight: 600;">
+                    <i class="bi bi-image me-2"></i><span style="color: white !important;">Official PE UNIFORM DESIGN</span>
+                  </div>
+                  <div class="card-body p-0">
+                    <img src="../assets/img/pe.jpg" alt="PE Uniform Design" class="img-fluid w-100" style="height: 400px; object-fit: cover; cursor: pointer; transition: transform 0.3s;" onclick="openImageModal('../assets/img/pe.jpg', 'Official PE Uniform Design')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-header bg-gradient" style="background: linear-gradient(135deg, var(--color-orange) 0%, #ff6b6b 100%); color: white !important; font-weight: 600;">
+                    <i class="bi bi-tag-fill me-2"></i><span style="color: white !important;">Prices & Available Sizes</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-currency-exchange me-2" style="font-size: 1.5rem; color: var(--color-orange);"></i>
+                        <div>
+                          <div class="text-muted small">Price</div>
+                          <div class="h4 mb-0 fw-bold" style="color: var(--color-orange);">₱450.00</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="text-muted small mb-3">
+                        <i class="bi bi-info-circle me-1"></i>Available Sizes
+                      </div>
+                      <div class="d-flex flex-wrap gap-2">
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">XS</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">S</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">M</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">L</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">XL</span>
+                        <span class="badge rounded-pill" style="font-size: 0.95rem; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%); color: #1e1010; font-weight: 600;">2XL</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div class="col-lg-5">
-              <div class="card h-100">
-                <div class="card-header d-flex justify-content-between">
-                  <span>Your PE Uniform Orders</span>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    onclick="alert('Ordering is not enabled in this prototype.')"
-                  >
-                    View Order History
+          <!-- Accordion Sections -->
+          <section class="mb-4">
+            <div class="accordion" id="peUniformAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHowToOrder">
+                    How to order PE UNIFORM
                   </button>
-                </div>
-                <div class="card-body table-wrapper">
-                  <table
-                    class="table table-striped table-bordered table-sm table-hover"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Order ID</th>
-                        <th>Item</th>
-                        <th>Size</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="studentPeUniformTableBody"></tbody>
-                  </table>
-                  <p class="meta-text mb-0">
-                    Statuses such as Processing, Ready for Pickup, or Claimed
-                    will appear here.
-                  </p>
+                </h2>
+                <div id="collapseHowToOrder" class="accordion-collapse collapse show" data-bs-parent="#peUniformAccordion">
+                  <div class="accordion-body">
+                    <ol class="mb-0">
+                      <li>View available PE uniform sizes, price, and availability in the PE Uniform Section of SynTrack.</li>
+                      <li>Inform your Block Treasurer of your selected size and submit your payment in cash.</li>
+                      <li>Wait for the official receipt to be issued through your Block Treasurer.</li>
+                      <li>Your order and payment are recorded by the CSC Business Manager in SynTrack.</li>
+                      <li>Track your order status in this section and through notifications:
+                        <ul>
+                          <li>Order Placed – Order submitted through Block Treasurer</li>
+                          <li>Pending Payment Verification – Payment recorded, awaiting confirmation</li>
+                          <li>Processing Order – PE uniform is being prepared</li>
+                          <li>Ready for Pickup – Uniform is available for claiming</li>
+                        </ul>
+                      </li>
+                      <li>Prepare your official receipt and Student ID for claiming.</li>
+                      <li>Claim your PE uniform during the announced pickup schedule at the CSC Office. In some cases, the Block Treasurer may be authorized to claim all PE uniforms for the block, depending on official CSC instructions.</li>
+                      <li>Your PE uniform is Done! You may return to this section anytime to view your order and payment history.</li>
+                    </ol>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div class="col-lg-3">
-              <div class="card h-100">
-                <div class="card-header">Announcements</div>
-                <div class="card-body">
-                  <p class="mb-1">
-                    • PE uniform claiming schedules and reminders will be posted
-                    here.
-                  </p>
-                  <p class="mb-1">
-                    • Stock availability updates will also appear in this panel.
-                  </p>
-                  <p class="placeholder-note mb-0">
-                    This is a static prototype page. In production, PE
-                    uniform-related announcements would sync with actual CSC
-                    posts.
-                  </p>
+          <!-- Current Order Update -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">YOUR CURRENT ORDER UPDATE</h4>
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-2">
+                  <div class="col-md-6"><strong>Order ID:</strong> PE-001</div>
+                  <div class="col-md-6"><strong>Status:</strong> <span class="badge bg-warning">Processing Order</span></div>
                 </div>
+                <div class="row mb-2">
+                  <div class="col-md-6"><strong>Size:</strong> M</div>
+                  <div class="col-md-6"><strong>Date Ordered:</strong> 2025-02-05</div>
+                </div>
+                <p class="mb-0"><strong>Note:</strong> Your PE uniform is currently being prepared. You will be notified when it's ready for pickup.</p>
               </div>
             </div>
-          </div>
+          </section>
+
+          <!-- Order History -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">Order History</h4>
+            <div class="card">
+              <div class="card-body table-wrapper">
+                <table class="table table-striped table-bordered table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Sem & AY</th>
+                      <th>Item</th>
+                      <th>Amount</th>
+                      <th>View Unofficial Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody id="peUniformHistoryTableBody">
+                    <tr>
+                      <td>2025-02-05</td>
+                      <td>2nd Sem 2024-2025</td>
+                      <td>PE Uniform (Size M)</td>
+                      <td>₱450.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewPEUniformReceipt('PE-001', '2025-02-05', '2nd Sem 2024-2025', 'M')">View Receipt</button></td>
+                    </tr>
+                    <tr>
+                      <td>2024-09-15</td>
+                      <td>1st Sem 2024-2025</td>
+                      <td>PE Uniform (Size M)</td>
+                      <td>₱450.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewPEUniformReceipt('PE-002', '2024-09-15', '1st Sem 2024-2025', 'M')">View Receipt</button></td>
+                    </tr>
+                    <tr>
+                      <td>2024-02-10</td>
+                      <td>2nd Sem 2023-2024</td>
+                      <td>PE Uniform (Size M)</td>
+                      <td>₱450.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewPEUniformReceipt('PE-003', '2024-02-10', '2nd Sem 2023-2024', 'M')">View Receipt</button></td>
+                    </tr>
+                    <tr>
+                      <td>2023-09-20</td>
+                      <td>1st Sem 2023-2024</td>
+                      <td>PE Uniform (Size M)</td>
+                      <td>₱450.00</td>
+                      <td><button class="btn btn-sm btn-primary" onclick="viewPEUniformReceipt('PE-004', '2023-09-20', '1st Sem 2023-2024', 'M')">View Receipt</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- Announcements -->
+          <section class="mb-4">
+            <h4 class="fw-bold mb-3">Announcements</h4>
+            <div class="card">
+              <div class="card-body">
+                <p class="mb-2">• PE uniform claiming schedules and reminders will be posted here.</p>
+                <p class="mb-0">• Stock availability updates will also appear in this panel.</p>
+              </div>
+            </div>
+          </section>
         </div>
 
         <footer class="app-footer">
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span
-              >CSC PayTrack · Bicol University Polangui - College Student
-              Council</span
-            >
-            <span class="meta-text">
-              Prototype UI · For academic purposes only
-            </span>
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <div class="mb-2">
+                  <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                    <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+                  </a>
+                </div>
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
     </div>
+
+    <!-- Image Fullscreen Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content bg-dark">
+          <div class="modal-header border-0">
+            <h5 class="modal-title text-white" id="imageModalTitle">Image</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex align-items-center justify-content-center p-0">
+            <img id="imageModalImg" src="" alt="Fullscreen Image" class="img-fluid" style="max-height: 100vh; max-width: 100%; object-fit: contain;" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Unofficial Acknowledgment Receipt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="receiptModalBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include all modals from dashboard -->
+    <div id="commonModals"></div>
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -241,14 +423,102 @@
     <script src="../assets/js/data.js"></script>
     <script src="../assets/js/forms.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/modals.js"></script>
     <script>
+      // Load common modals
+      fetch('../student/common_modals.html')
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load modals');
+          return r.text();
+        })
+        .then(html => {
+          const container = document.getElementById('commonModals');
+          if (container) {
+            container.innerHTML = html;
+            setTimeout(() => {
+              if (typeof initializeModals === 'function') {
+                initializeModals();
+              }
+            }, 100);
+          }
+        })
+        .catch(err => {
+          console.error('Error loading modals:', err);
+          const container = document.getElementById('commonModals');
+          if (container) {
+            container.innerHTML = '';
+          }
+        });
+
+      function openImageModal(imageSrc, title) {
+        document.getElementById('imageModalImg').src = imageSrc;
+        document.getElementById('imageModalTitle').textContent = title;
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+      }
+
+      function viewPEUniformReceipt(receiptId, date, semAy, size) {
+        const modalBody = document.getElementById("receiptModalBody");
+        const studentName = "JUAN DELA CRUZ";
+        
+        modalBody.innerHTML = `
+          <div class="receipt-container" style="border: 2px solid #000; padding: 2rem; font-family: Arial, sans-serif;">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <div>
+                <div class="mb-2"><strong>BICOL UNIVERSITY</strong></div>
+                <div>University Student Council</div>
+                <div>Daraga, Albay</div>
+              </div>
+              <div class="text-end">
+                <div><strong>No ${receiptId}</strong></div>
+              </div>
+            </div>
+            
+            <div class="text-center mb-4">
+              <h4 class="fw-bold">OFFICIAL ACKNOWLEDGMENT RECEIPT</h4>
+            </div>
+
+            <div class="mb-3">
+              <div class="mb-2"><strong>Date:</strong> ${date}</div>
+              <div class="mb-2"><strong>College/Institute:</strong> Bicol University Polangui</div>
+            </div>
+
+            <div class="mb-3">
+              <div>RECEIVED from <strong>${studentName}</strong> the sum of <strong>FOUR HUNDRED FIFTY pesos (P450)</strong></div>
+              <div class="mt-2">this ${semAy} as payment for:</div>
+            </div>
+
+            <div class="mb-3">
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> USC and CSC Fee</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> Insurance Fee</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ID Validation Fee</div>
+              <div><input type="checkbox" checked disabled style="margin-right: 0.5rem;"> PE Uniform (Size ${size})</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ___units of BU Seals</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> ___units of BU Plates</div>
+              <div><input type="checkbox" disabled style="margin-right: 0.5rem;"> Others- Please specify:_____________</div>
+            </div>
+
+            <div class="mt-4 mb-2">
+              <div class="text-end">
+                <div class="mb-4"><strong>CSC BUSINESS MANAGER</strong></div>
+                <div>COLLECTING OFFICER</div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-center text-muted small">
+              <strong>NOTE:</strong> THIS IS AN UNOFFICIAL ACKNOWLEGMENT RECEIPT. FOR AN OFFICIAL COPY, DIRECTLY CONTACT THE BICOL UNIVERSITY POLANGUI COLLEGE STUDENT COUNCIL TREASURER.
+            </div>
+          </div>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById("receiptModal"));
+        modal.show();
+      }
+
       document.addEventListener("DOMContentLoaded", () => {
         applyStoredTheme();
         startClock("currentDateTime");
-        loadStudentPeUniform();
       });
     </script>
   </body>
 </html>
-
-

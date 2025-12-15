@@ -1,4 +1,4 @@
-// Mock data for CSC Financial Tracking and Payment Management System
+// Mock data for SynTrack – Bicol University Polangui College Student Council Financial Tracking System
 // No backend — all data is static in-memory JS objects/arrays.
 
 // Students
@@ -111,11 +111,11 @@ const disputes = [
 const announcements = [
   {
     id: 1,
-    title: "CSC PayTrack Launch",
+    title: "SynTrack Launch",
     date: "Feb 10, 2025",
     author: "CSC ICT",
     description:
-      "Welcome to CSC PayTrack! Explore the new all-in-one financial tracking experience for BU Polangui.",
+      "Welcome to SynTrack! Explore the new all-in-one financial tracking experience for BU Polangui.",
   },
   {
     id: 2,
