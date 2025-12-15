@@ -766,211 +766,292 @@ function submitDispute() {
 // TREASURER MODULE RENDERERS
 // ===========================
 
-// CSC fee table with Verify button
-function renderCscFeeTable() {
-  const tbody = document.getElementById("table-csc-fee");
+const TREASURER_NAME = "VANNESA ROSE B.";
+
+function logAudit(action, details) {
+  if (!Array.isArray(auditTrail)) return;
+  const now = new Date();
+  const timestamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+  auditTrail.unshift({ timestamp, action, details, performedBy: TREASURER_NAME });
+}
+
+function getBlocksFromData() {
+  const set = new Set();
+  students.forEach((s) => s.block && set.add(s.block));
+  cscFeePayments.forEach((p) => p.block && set.add(p.block));
+  // Ensure 1A-4B range exists for filters
+  ["1A", "1B", "2A", "2B", "3A", "3B", "4A", "4B"].forEach((b) => set.add(b));
+  return Array.from(set).sort();
+}
+
+function getCoursesFromData() {
+  const set = new Set();
+  students.forEach((s) => s.course && set.add(s.course));
+  cscFeePayments.forEach((p) => p.course && set.add(p.course));
+  return Array.from(set).sort();
+}
+
+function computeCscStats() {
+  const totalVerified = cscFeePayments.filter((p) => p.status === "Verified").length;
+  const totalPending = cscFeePayments.filter((p) => p.status === "Pending").length;
+  const totalCollected = cscFeePayments
+    .filter((p) => p.status === "Verified")
+    .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+  const paidIds = new Set(
+    cscFeePayments.filter((p) => p.status === "Verified").map((p) => p.studentId),
+  );
+  const studentsNotPaid = students.filter((s) => !paidIds.has(s.id)).length;
+  return { totalVerified, totalPending, totalCollected, studentsNotPaid };
+}
+
+function renderCscOverview() {
+  const { totalVerified, totalPending, totalCollected, studentsNotPaid } = computeCscStats();
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+  setText("cscTotalVerified", totalVerified);
+  setText("cscTotalPending", totalPending);
+  setText(
+    "cscTotalCollected",
+    "₱" + totalCollected.toLocaleString(undefined, { minimumFractionDigits: 2 }),
+  );
+  setText("cscStudentsNotPaid", studentsNotPaid);
+  const badge = document.getElementById("pendingCountBadge");
+  if (badge) badge.textContent = totalPending;
+}
+
+function renderPendingTable() {
+  const tbody = document.getElementById("pendingPaymentsTable");
   if (!tbody) return;
 
-  tbody.innerHTML = "";
+  const q = document.getElementById("cscSearchInput")?.value.toLowerCase() || "";
+  const block = document.getElementById("cscBlockFilter")?.value || "";
+  const course = document.getElementById("cscCourseFilter")?.value || "";
+  let rows = cscFeePayments.filter((p) => p.status === "Pending");
+  if (q)
+    rows = rows.filter(
+      (p) =>
+        p.studentName.toLowerCase().includes(q) ||
+        p.studentId.toLowerCase().includes(q) ||
+        (p.referenceNumber || "").toLowerCase().includes(q),
+    );
+  if (block) rows = rows.filter((p) => p.block === block);
+  if (course) rows = rows.filter((p) => p.course === course);
 
-  if (!cscFeePayments.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6" class="text-center placeholder-note">
-          No CSC fee records yet.
-        </td>
-      </tr>
-    `;
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-3">No pending submissions</td></tr>`;
     return;
   }
 
+  tbody.innerHTML = rows
+    .map(
+      (p) => `
+    <tr>
+      <td><strong>${p.studentName}</strong></td>
+      <td>${p.studentId}</td>
+      <td>${p.block || "-"}</td>
+      <td class="d-none d-md-table-cell">${p.course || "-"}</td>
+      <td>₱${Number(p.amount || 0).toFixed(2)}</td>
+      <td>${p.referenceNumber || "—"}</td>
+      <td>${p.dateSubmitted || p.date || "—"}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-primary" onclick="openPaymentModal('${p.receiptId}')">
+          <i class="bi bi-image"></i> Proof
+        </button>
+      </td>
+      <td class="text-end">
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-success" onclick="verifyPending('${p.receiptId}')"><i class="bi bi-check2-circle"></i> Verify</button>
+          <button class="btn btn-outline-danger" onclick="rejectPending('${p.receiptId}')"><i class="bi bi-x-circle"></i> Reject</button>
+        </div>
+      </td>
+    </tr>
+  `,
+    )
+    .join("");
+}
+
+function renderStudentStatusTable() {
+  const tbody = document.getElementById("studentStatusTable");
+  if (!tbody) return;
+
+  const q = document.getElementById("cscSearchInput")?.value.toLowerCase() || "";
+  const block = document.getElementById("cscBlockFilter")?.value || "";
+  const statusFilter = document.getElementById("cscStatusFilter")?.value || "";
+  const course = document.getElementById("cscCourseFilter")?.value || "";
+
+  const latestByStudent = {};
   cscFeePayments.forEach((p) => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${p.receiptId}</td>
-        <td>${p.studentName}</td>
-        <td>${p.amount}</td>
-        <td>${p.date}</td>
-        <td>${p.status}</td>
-        <td>
-          <button class="btn btn-success btn-sm" onclick="verifyPayment('${p.receiptId}')">
-            Verify
-          </button>
-        </td>
-      </tr>
-    `;
-  });
-}
-
-// Add CSC fee payment from modal
-function addCSCfee() {
-  const studentId = document.getElementById("form_studentId").value.trim();
-  const amountVal = document.getElementById("form_amount").value;
-  const details = document.getElementById("form_details").value.trim();
-
-  if (!studentId || !amountVal) {
-    alert("Student ID and Amount are required.");
-    return;
-  }
-
-  const amount = parseFloat(amountVal);
-  const student = students.find((s) => s.id === studentId);
-
-  cscFeePayments.push({
-    receiptId: generateId("CSC"),
-    studentId,
-    studentName: student ? student.name : "Unknown Student",
-    amount,
-    date: new Date().toISOString().split("T")[0],
-    status: "Pending",
-    details,
-  });
-
-  closeModal("addRecordModal");
-  document.getElementById("addRecordForm").reset();
-  renderCscFeeTable();
-}
-
-// Verify CSC fee payment
-function verifyPayment(receiptId) {
-  const payment = cscFeePayments.find((p) => p.receiptId === receiptId);
-  if (payment) {
-    payment.status = "Verified";
-  }
-  renderCscFeeTable();
-}
-
-function loadTreasurerDashboard() {
-  renderTable("treasurerRecentPaymentsBody", cscFeePayments, [
-    "date",
-    "studentName",
-    "receiptId",
-    "amount",
-  ]);
-
-  const countEl = document.getElementById("countCSC");
-  if (countEl) countEl.innerText = cscFeePayments.length.toString();
-
-  if (typeof Chart !== "undefined") {
-    const ctx = document.getElementById("treasurerCollectionChart");
-    if (ctx && cscFeePayments.length > 0) {
-      const agg = aggregateByMonth(cscFeePayments, "amount", "date");
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: agg.labels,
-          datasets: [
-            {
-              label: "CSC Fee Collections",
-              data: agg.values,
-              backgroundColor: "#16a34a88",
-              borderColor: "#16a34a",
-              borderWidth: 1,
-            },
-          ],
-        },
-      });
+    const existing = latestByStudent[p.studentId];
+    if (!existing || (p.dateSubmitted || p.date) > (existing.dateSubmitted || existing.date)) {
+      latestByStudent[p.studentId] = p;
     }
-  }
-}
+  });
 
-function loadTreasurerDisputeTable() {
-  const data = disputes.map((d) => {
-    const student = students.find((s) => s.id === d.studentId);
+  let rows = students.map((s) => {
+    const latest = latestByStudent[s.id];
+    let status = "Unpaid";
+    let dateVerified = "";
+    let verifiedBy = "";
+    if (latest) {
+      if (latest.status === "Verified") {
+        status = "Verified";
+        dateVerified = latest.date || latest.dateSubmitted || "";
+        verifiedBy = latest.verifiedBy || TREASURER_NAME;
+      } else if (latest.status === "Pending") {
+        status = "Pending";
+      } else if (latest.status === "Rejected") {
+        status = "Rejected";
+      }
+    }
     return {
-      disputeId: d.disputeId,
-      date: d.date,
-      student: student ? student.name : d.studentId,
-      type: "CSC Fee",
-      summary: d.issue,
-      status: d.status,
+      studentName: s.name,
+      studentId: s.id,
+      block: s.block || "-",
+      course: s.course || "-",
+      status,
+      dateVerified,
+      verifiedBy,
     };
   });
 
-  renderTable("treasurerDisputeTableBody", data, [
-    "disputeId",
-    "date",
-    "student",
-    "type",
-    "summary",
-    "status",
-  ]);
-}
+  if (q) rows = rows.filter((r) => r.studentName.toLowerCase().includes(q) || r.studentId.toLowerCase().includes(q));
+  if (block) rows = rows.filter((r) => r.block === block);
+  if (course) rows = rows.filter((r) => r.course === course);
+  if (statusFilter) rows = rows.filter((r) => r.status === statusFilter);
 
-function loadTreasurerReports() {
-  if (typeof Chart !== "undefined") {
-    const ctx = document.getElementById("cscFeeChart");
-    if (ctx) {
-      // Simple static chart from prompt
-      const months = ["Jan", "Feb", "Mar", "Apr"];
-      const totals = [300, 450, 500, 600];
-
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: months,
-          datasets: [
-            {
-              label: "CSC Fee Collections",
-              data: totals,
-              backgroundColor: "#2563eb88",
-              borderColor: "#2563eb",
-              borderWidth: 1,
-            },
-          ],
-        },
-      });
-    }
-
-    const disputeCtx = document.getElementById("treasurerDisputeChart");
-    if (disputeCtx) {
-      const statusCounts = {};
-      disputes.forEach((d) => {
-        statusCounts[d.status] = (statusCounts[d.status] || 0) + 1;
-      });
-      const labels = Object.keys(statusCounts);
-      const values = labels.map((k) => statusCounts[k]);
-
-      new Chart(disputeCtx, {
-        type: "doughnut",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Disputes by Status",
-              data: values,
-              backgroundColor: ["#f97316", "#22c55e", "#ef4444", "#6366f1"],
-            },
-          ],
-        },
-      });
-    }
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-3">No records found</td></tr>`;
+    return;
   }
 
-  const summary = [
-    {
-      term: "AY 2025-2026 (Mock)",
-      total: cscFeePayments.reduce(
-        (sum, p) => sum + Number(p.amount || 0),
-        0,
-      ),
-      paid: cscFeePayments
-        .filter((p) => p.status === "Verified")
-        .reduce((sum, p) => sum + Number(p.amount || 0), 0),
-      unpaid: cscFeePayments
-        .filter((p) => p.status !== "Verified")
-        .reduce((sum, p) => sum + Number(p.amount || 0), 0),
-      disputes: disputes.length,
-    },
-  ];
+  tbody.innerHTML = rows
+    .map(
+      (r) => `
+    <tr>
+      <td><strong>${r.studentName}</strong></td>
+      <td>${r.studentId}</td>
+      <td>${r.block}</td>
+      <td class="d-none d-lg-table-cell">${r.course}</td>
+      <td><span class="badge bg-${r.status === "Verified" ? "success" : r.status === "Pending" ? "warning text-dark" : r.status === "Rejected" ? "danger" : "secondary"}">${r.status === "Verified" ? "Paid" : r.status === "Pending" ? "Pending" : r.status === "Rejected" ? "Rejected" : "Not Paid"}</span></td>
+      <td>${r.dateVerified || "—"}</td>
+      <td>${r.verifiedBy || "—"}</td>
+    </tr>
+  `,
+    )
+    .join("");
+}
 
-  renderTable("treasurerSummaryTableBody", summary, [
-    "term",
-    "total",
-    "paid",
-    "unpaid",
-    "disputes",
-  ]);
+let paymentModalInstance = null;
+let currentModalPaymentId = null;
+
+function openPaymentModal(receiptId) {
+  const payment = cscFeePayments.find((p) => p.receiptId === receiptId);
+  if (!payment) return;
+  currentModalPaymentId = receiptId;
+
+  document.getElementById("modalStudentName").textContent = payment.studentName;
+  document.getElementById("modalStudentId").textContent = payment.studentId;
+  document.getElementById("modalStudentBlock").textContent = payment.block || "-";
+  document.getElementById("modalAmount").textContent = Number(payment.amount || 0).toFixed(2);
+  document.getElementById("modalDate").textContent = payment.dateSubmitted || payment.date || "—";
+  document.getElementById("modalReference").textContent = payment.referenceNumber || "—";
+
+  const img = document.getElementById("modalProofImage");
+  img.src = payment.proofUrl || "https://via.placeholder.com/640x480?text=No+Proof";
+  img.onclick = () => window.open(img.src, "_blank");
+
+  const modalEl = document.getElementById("paymentModal");
+  paymentModalInstance = paymentModalInstance || new bootstrap.Modal(modalEl);
+  paymentModalInstance.show();
+
+  const verifyBtn = document.getElementById("modalVerifyBtn");
+  const rejectBtn = document.getElementById("modalRejectBtn");
+  verifyBtn.onclick = () => {
+    verifyPending(receiptId);
+    paymentModalInstance.hide();
+  };
+  rejectBtn.onclick = () => {
+    rejectPending(receiptId);
+    paymentModalInstance.hide();
+  };
+
+  logAudit(
+    "VIEWED_PROOF",
+    `Viewed proof for ${payment.studentName} (${payment.referenceNumber || "No Ref"})`,
+  );
+}
+
+function verifyPending(receiptId) {
+  const payment = cscFeePayments.find((p) => p.receiptId === receiptId);
+  if (!payment) return;
+  payment.status = "Verified";
+  payment.date = payment.date || new Date().toISOString().split("T")[0];
+  payment.verifiedBy = TREASURER_NAME;
+  logAudit(
+    "VERIFIED_PAYMENT",
+    `Verified payment from ${payment.studentName} (${payment.referenceNumber || "No Ref"})`,
+  );
+  refreshCscPage();
+}
+
+function rejectPending(receiptId) {
+  const payment = cscFeePayments.find((p) => p.receiptId === receiptId);
+  if (!payment) return;
+  payment.status = "Rejected";
+  payment.verifiedBy = TREASURER_NAME;
+  logAudit(
+    "REJECTED_PAYMENT",
+    `Rejected payment from ${payment.studentName} (${payment.referenceNumber || "No Ref"})`,
+  );
+  refreshCscPage();
+}
+
+function bindCscFilters() {
+  ["cscSearchInput", "cscBlockFilter", "cscCourseFilter", "cscStatusFilter"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el)
+      el.addEventListener("input", () => {
+        renderPendingTable();
+        renderStudentStatusTable();
+        logAudit("FILTER_CHANGED", `Updated filters on CSC Fee page (${id})`);
+      });
+  });
+}
+
+function hydrateBlockFilterOptions() {
+  const select = document.getElementById("cscBlockFilter");
+  if (!select) return;
+  const blocks = getBlocksFromData();
+  select.innerHTML =
+    `<option value="">All Blocks</option>` + blocks.map((b) => `<option value="${b}">${b}</option>`).join("");
+}
+
+function hydrateCourseFilterOptions() {
+  const select = document.getElementById("cscCourseFilter");
+  if (!select) return;
+  const courses = getCoursesFromData();
+  select.innerHTML =
+    `<option value="">All Courses</option>` +
+    courses
+      .map((c) => `<option value="${c}">${c}</option>`)
+      .join("");
+}
+
+function refreshCscPage() {
+  renderCscOverview();
+  renderPendingTable();
+  renderStudentStatusTable();
+}
+
+function loadTreasurerCscFeePage() {
+  applyStoredTheme && applyStoredTheme();
+  startClock && startClock("currentDateTime");
+  hydrateBlockFilterOptions();
+  hydrateCourseFilterOptions();
+  bindCscFilters();
+  refreshCscPage();
 }
 
 // ===============================
@@ -1362,7 +1443,9 @@ function setActiveLink() {
 
 // Basic per-page init hook (kept for flexibility)
 function initPage(pageId) {
-  // No-op placeholder
+  if (pageId === "treasurer-csc-fee") {
+    loadTreasurerCscFeePage();
+  }
 }
 
 // Attach global nav highlighter + reveal-on-scroll
