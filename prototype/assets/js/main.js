@@ -790,7 +790,7 @@ function submitDispute() {
 // TREASURER MODULE RENDERERS
 // ===========================
 
-const TREASURER_NAME = "VANNESA ROSE B.";
+const TREASURER_NAME = "BU Polangui CSC Treasurer";
 
 function logAudit(action, details) {
   if (!Array.isArray(auditTrail)) return;
@@ -858,7 +858,8 @@ function renderPendingTable() {
       (p) =>
         p.studentName.toLowerCase().includes(q) ||
         p.studentId.toLowerCase().includes(q) ||
-        (p.referenceNumber || "").toLowerCase().includes(q),
+        (p.referenceNumber || "").toLowerCase().includes(q) ||
+        (p.receiptId || "").toLowerCase().includes(q),
     );
   if (block) rows = rows.filter((p) => p.block === block);
   if (course) rows = rows.filter((p) => p.course === course);
@@ -869,30 +870,45 @@ function renderPendingTable() {
   }
 
   tbody.innerHTML = rows
-    .map(
-      (p) => `
-    <tr>
-      <td><strong>${p.studentName}</strong></td>
-      <td>${p.studentId}</td>
-      <td>${p.block || "-"}</td>
-      <td class="d-none d-md-table-cell">${p.course || "-"}</td>
-      <td>₱${Number(p.amount || 0).toFixed(2)}</td>
-      <td>${p.referenceNumber || "—"}</td>
-      <td>${p.dateSubmitted || p.date || "—"}</td>
-      <td>
-        <button class="btn btn-sm btn-outline-primary" onclick="openPaymentModal('${p.receiptId}')">
-          <i class="bi bi-image"></i> Proof
-        </button>
-      </td>
-      <td class="text-end">
-        <div class="btn-group btn-group-sm">
-          <button class="btn btn-success" onclick="verifyPending('${p.receiptId}')"><i class="bi bi-check2-circle"></i> Verify</button>
-          <button class="btn btn-outline-danger" onclick="rejectPending('${p.receiptId}')"><i class="bi bi-x-circle"></i> Reject</button>
-        </div>
-      </td>
-    </tr>
-  `,
-    )
+    .map((p) => {
+      const academicYear = p.academicYear || "2025-2026";
+      const yearCourseBlock =
+        p.yearCourseBlock ||
+        `${p.yearLevel || "3rd Year"} ${p.course || "BSIT"}${
+          p.block ? " • " + p.block : ""
+        }`;
+      const receiptNo = p.referenceNumber || p.receiptId || "—";
+      const date = p.dateSubmitted || p.date || "—";
+      return `
+        <tr>
+          <td>
+            <strong>${p.studentName}</strong>
+            <div class="small text-muted">${p.studentId}</div>
+          </td>
+          <td>${academicYear}</td>
+          <td>${yearCourseBlock}</td>
+          <td>₱${Number(p.amount || 0).toFixed(2)}</td>
+          <td>${receiptNo}</td>
+          <td>${date}</td>
+          <td>
+            <span class="badge bg-warning text-dark">Pending</span>
+          </td>
+          <td class="text-end">
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-primary" onclick="openPaymentModal('${p.receiptId}')">
+                <i class="bi bi-image"></i> Proof
+              </button>
+              <button class="btn btn-success" onclick="verifyPending('${p.receiptId}')">
+                <i class="bi bi-check2-circle"></i> Verify
+              </button>
+              <button class="btn btn-outline-danger" onclick="rejectPending('${p.receiptId}')">
+                <i class="bi bi-x-circle"></i> Reject
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    })
     .join("");
 }
 

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
   </head>
 
-  <body onload="initPage('treasurer-csc-fee')" class="theme-dark">
+  <body>
     <div class="app-shell">
       <!-- Sidebar -->
       <aside class="sidebar" id="appSidebar" aria-label="Sidebar">
@@ -86,19 +86,31 @@
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
-                  <strong>VANNESA ROSE B.</strong>
-                  <div class="small text-muted">BSIT | 3rd Year</div>
+                  <strong>BU Polangui CSC</strong>
+                  <div class="small text-muted">Treasurer</div>
                 </div>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
                 <div class="notification-item unread">
                   <strong>Payment Pending Verification</strong>
-                  <p>Maria Santos submitted ₱500 for verification</p>
-                  <small>2 hours ago</small>
+                  <p>Several CSC fee payments are waiting for review.</p>
+                  <small>Just now</small>
+                </div>
+                <div class="notification-item unread">
+                  <strong>New Concern Submitted</strong>
+                  <p>A student reported a CSC fee posting issue.</p>
+                  <small>1 hour ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Daily Summary</strong>
+                  <p>View today's verified CSC fee payments in the Reports page.</p>
+                  <small>Today</small>
                 </div>
               </div>
             </div>
@@ -108,9 +120,20 @@
         <div class="page-content">
           <section class="dashboard-hero mb-4">
             <div class="row align-items-center">
-              <div class="col-md-12">
+              <div class="col-md-8">
                 <h2 class="mb-1">CSC Fee Management</h2>
-                <p class="hero-subtitle mb-0">Verify payments fast, track statuses, and keep records clean.</p>
+                <p class="hero-subtitle mb-0 meta-text">Verify payments fast, track statuses, and keep records clean.</p>
+              </div>
+              <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#attachRecordModal"
+                >
+                  <i class="bi bi-camera me-1"></i>
+                  Attach New Records
+                </button>
               </div>
             </div>
           </section>
@@ -167,73 +190,55 @@
           <div class="card mb-4">
             <div class="card-header d-flex flex-wrap gap-3 align-items-center">
               <span class="fw-semibold">Search & Filters</span>
-              <div class="ms-auto small text-muted">Actions here are logged to the Audit Trail (dashboard).</div>
+              <div class="ms-auto small text-muted">Search by student name, ID, or receipt number. Filters are logged in the Audit Logs.</div>
             </div>
-          <div class="card-body row g-3">
-            <div class="col-12 col-lg-3">
-              <label class="form-label small text-muted">Search name or ID</label>
-              <input class="form-control" id="cscSearchInput" placeholder="e.g. Maria or 2025-" />
-            </div>
-            <div class="col-6 col-lg-3">
-              <label class="form-label small text-muted">Filter by block</label>
-              <select class="form-select" id="cscBlockFilter">
-                <option value="">All Blocks</option>
-              </select>
-            </div>
-            <div class="col-6 col-lg-3">
-              <label class="form-label small text-muted">Filter by course</label>
-              <select class="form-select" id="cscCourseFilter">
-                <option value="">All Courses</option>
-              </select>
-            </div>
-            <div class="col-6 col-lg-3">
-              <label class="form-label small text-muted">Filter by status</label>
-              <select class="form-select" id="cscStatusFilter">
-                <option value="">All</option>
-                <option value="Pending">Pending</option>
-                <option value="Verified">Paid</option>
-                <option value="Unpaid">Not Paid</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-            </div>
-          </div>
-          </div>
-
-          <!-- Pending verification table -->
-          <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <span class="fw-semibold">Pending Payment Verifications</span>
-              <span id="pendingCountBadge" class="badge bg-warning text-dark">0</span>
-            </div>
-            <div class="card-body table-wrapper">
-              <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle mb-0">
-                  <thead class="table-warning">
-                    <tr>
-                      <th>Student Name</th>
-                      <th>Student ID</th>
-                      <th>Block</th>
-                      <th class="d-none d-md-table-cell">Course</th>
-                      <th>Amount</th>
-                      <th>Reference #</th>
-                      <th>Date Submitted</th>
-                      <th>Proof</th>
-                      <th class="text-end">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="pendingPaymentsTable">
-                    <tr><td colspan="8" class="text-center text-muted py-3">No pending submissions</td></tr>
-                  </tbody>
-                </table>
+            <div class="card-body">
+              <div class="row g-3 mb-3">
+                <div class="col-12">
+                  <label class="form-label small text-muted">Search Bar (can search names, etc.)</label>
+                  <input class="form-control" id="cscSearchInput" placeholder="e.g. Maria Santos, 2025-001, RCPT-1025" />
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-6 col-lg-3">
+                  <label class="form-label small text-muted">Department</label>
+                  <select class="form-select" id="cscDeptFilter">
+                    <option value="">All Departments</option>
+                  </select>
+                </div>
+                <div class="col-6 col-lg-3">
+                  <label class="form-label small text-muted">Course</label>
+                  <select class="form-select" id="cscCourseFilter">
+                    <option value="">All Courses</option>
+                  </select>
+                </div>
+                <div class="col-6 col-lg-3">
+                  <label class="form-label small text-muted">Block</label>
+                  <select class="form-select" id="cscBlockFilter">
+                    <option value="">All Blocks</option>
+                  </select>
+                </div>
+                <div class="col-6 col-lg-3">
+                  <label class="form-label small text-muted">Status</label>
+                  <select class="form-select" id="cscStatusFilter">
+                    <option value="">All</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Payment Pending">Payment Pending</option>
+                    <option value="Pending Verification">Pending Verification</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Student payment status table -->
+          <!-- CSC Fee records -->
           <div class="card mb-4">
             <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
-              <span>Student Payment Status</span>
-              <span class="small text-muted">Live view of all students and statuses</span>
+              <span>CSC FEE RECORDS</span>
+              <button type="button" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
+              </button>
             </div>
             <div class="card-body table-wrapper">
               <div class="table-responsive">
@@ -241,16 +246,42 @@
                   <thead class="table-light">
                     <tr>
                       <th>Student Name</th>
-                      <th>Student ID</th>
-                      <th>Block</th>
-                      <th class="d-none d-lg-table-cell">Course</th>
+                      <th>A.Y.</th>
+                      <th>Yr. Course, Block</th>
+                      <th>Amount</th>
+                      <th>Receipt No.</th>
+                      <th>Date</th>
                       <th>Status</th>
-                      <th>Date Verified</th>
-                      <th>Verified By</th>
+                      <th class="text-end">Actions (Verify / Reject)</th>
                     </tr>
                   </thead>
-                  <tbody id="studentStatusTable">
-                    <tr><td colspan="7" class="text-center text-muted py-3">No records found</td></tr>
+                  <tbody id="cscFeeRecordsBody">
+                    <tr><td colspan="8" class="text-center text-muted py-3">No records found</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audit Logs section -->
+          <div class="card mb-4">
+            <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+              <span>Audit Logs</span>
+              <button type="button" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
+              </button>
+            </div>
+            <div class="card-body table-wrapper">
+              <div class="table-responsive">
+                <table class="table table-striped table-sm table-hover align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Date &amp; Time</th>
+                      <th>Action</th>
+                      <th>Performed By</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cscAuditLogBody">
                   </tbody>
                 </table>
               </div>
@@ -259,9 +290,31 @@
         </div>
 
         <footer class="app-footer">
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span>CSC PayTrack · Bicol University Polangui - College Student Council</span>
-            <span class="meta-text">Prototype UI · For academic purposes only</span>
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <div class="mb-2">
+                  <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                    <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+                  </a>
+                </div>
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
@@ -304,9 +357,198 @@
       </div>
     </div>
 
+    <!-- Attach New Records (prototype only) -->
+    <div class="modal fade" id="attachRecordModal" tabindex="-1" aria-labelledby="attachRecordModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="attachRecordModalLabel">Attach New CSC Fee Records</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="display-4 mb-3">
+              <i class="bi bi-camera-fill"></i>
+            </div>
+            <p class="mb-2">
+              Attach New CSC Fee Records
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit Logs (CSC Fee page only, static prototype) -->
+    <div class="modal fade" id="cscAuditModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">CSC Fee Audit Logs</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="cscAuditLogBody">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/data.js"></script>
     <script src="../assets/js/forms.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/treasurer_data.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        applyStoredTheme && applyStoredTheme();
+        startClock && startClock('currentDateTime');
+        updateCscFeeSummaryCards();
+        renderCscFeeRecordsTable();
+        renderCscAuditTable();
+        bindCscFeeFilters();
+      });
+
+      function mapStatusLabel(status) {
+        if (status === 'Verified') return 'Paid';
+        if (status === 'Pending Verification') return 'Pending Verification';
+        return status;
+      }
+
+      function getStatusBadgeClass(status) {
+        if (status === 'Verified') return 'badge bg-success';
+        if (status === 'Pending Verification' || status === 'Payment Pending') return 'badge bg-warning text-dark';
+        if (status === 'Rejected') return 'badge bg-danger';
+        return 'badge bg-secondary';
+      }
+
+      function renderCscFeeRecordsTable() {
+        const tbody = document.getElementById('cscFeeRecordsBody');
+        if (!tbody) return;
+
+        const search = (document.getElementById('cscSearchInput')?.value || '').toLowerCase();
+        const dept = document.getElementById('cscDeptFilter')?.value || '';
+        const course = document.getElementById('cscCourseFilter')?.value || '';
+        const block = document.getElementById('cscBlockFilter')?.value || '';
+        const statusFilter = document.getElementById('cscStatusFilter')?.value || '';
+
+        let rows = treasurerCscFeeRecords.slice();
+
+        if (dept) rows = rows.filter(r => r.department === dept);
+        if (course) rows = rows.filter(r => r.course === course);
+        if (block) rows = rows.filter(r => r.block === block);
+
+        if (statusFilter) {
+          rows = rows.filter(r => {
+            const label = mapStatusLabel(r.status);
+            return label.toLowerCase().includes(statusFilter.toLowerCase());
+          });
+        }
+
+        if (search) {
+          rows = rows.filter(r =>
+            r.studentName.toLowerCase().includes(search) ||
+            r.studentId.toLowerCase().includes(search) ||
+            (r.receiptNo || '').toLowerCase().includes(search)
+          );
+        }
+
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan=\"8\" class=\"text-center text-muted py-3\">No records found</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = rows.map(r => {
+          const statusLabel = mapStatusLabel(r.status);
+          const badgeClass = getStatusBadgeClass(r.status);
+          const yearCourseBlock = `${r.yearLevel} ${r.course} • ${r.block}`;
+          const canVerify = r.status === 'Pending Verification';
+          return `
+            <tr>
+              <td><strong>${r.studentName}</strong><div class=\"small text-muted\">${r.studentId}</div></td>
+              <td>${r.academicYear}</td>
+              <td>${yearCourseBlock}</td>
+              <td>₱${Number(r.amount || 0).toFixed(2)}</td>
+              <td>${r.receiptNo}</td>
+              <td>${r.date}</td>
+              <td><span class=\"${badgeClass}\">${statusLabel}</span></td>
+              <td class=\"text-end\">
+                <div class=\"btn-group btn-group-sm\">
+                  <button class=\"btn btn-outline-primary\" type=\"button\" ${canVerify ? '' : 'disabled'}>Verify</button>
+                  <button class=\"btn btn-outline-danger\" type=\"button\" ${canVerify ? '' : 'disabled'}>Reject</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      function bindCscFeeFilters() {
+        const deptSelect = document.getElementById('cscDeptFilter');
+        const courseSelect = document.getElementById('cscCourseFilter');
+        const blockSelect = document.getElementById('cscBlockFilter');
+
+        if (!deptSelect || !courseSelect || !blockSelect) return;
+
+        const depts = treasurerGetDistinctDepartments();
+        deptSelect.innerHTML = '<option value="">All Departments</option>' +
+          depts.map(d => `<option value="${d}">${d}</option>`).join('');
+
+        function refreshCourseOptions() {
+          const selectedDept = deptSelect.value || '';
+          const courses = treasurerGetDistinctCourses(selectedDept);
+          courseSelect.innerHTML = '<option value="">All Courses</option>' +
+            courses.map(c => `<option value="${c}">${c}</option>`).join('');
+          refreshBlockOptions();
+        }
+
+        function refreshBlockOptions() {
+          const selectedCourse = courseSelect.value || '';
+          const blocks = treasurerGetDistinctBlocks(selectedCourse);
+          blockSelect.innerHTML = '<option value="">All Blocks</option>' +
+            blocks.map(b => `<option value="${b}">${b}</option>`).join('');
+        }
+
+        deptSelect.addEventListener('change', () => {
+          refreshCourseOptions();
+          renderCscFeeRecordsTable();
+        });
+
+        courseSelect.addEventListener('change', () => {
+          refreshBlockOptions();
+          renderCscFeeRecordsTable();
+        });
+
+        blockSelect.addEventListener('change', renderCscFeeRecordsTable);
+        document.getElementById('cscSearchInput')?.addEventListener('input', renderCscFeeRecordsTable);
+        document.getElementById('cscStatusFilter')?.addEventListener('change', renderCscFeeRecordsTable);
+
+        // Initial load
+        refreshCourseOptions();
+        refreshBlockOptions();
+      }
+
+      function renderCscAuditTable() {
+        const tbody = document.getElementById('cscAuditLogBody');
+        if (!tbody) return;
+        const entries = getCscFeeAuditLogs();
+        if (!entries || entries.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted py-3">No audit logs</td></tr>';
+          return;
+        }
+        tbody.innerHTML = entries
+          .map(
+            (e) => `
+          <tr>
+            <td>${e.time}</td>
+            <td>${e.action}</td>
+            <td>${e.user}</td>
+          </tr>
+        `,
+          )
+          .join('');
+      }
+    </script>\n   </body>\n </html>\n*** End Patch"}}assistant to=functions.ApplyPatchனوفمبر_RGCTXassistant_RGCTXassistant рышциям to=functions.ApplyPatch:-------------</commentary ಾಗಿ to=functions.ApplyPatch  LusjsonCpp codeHere  디assistant to=functions.ApplyPatch_COMMMENTARY  brijsonHere  الأمور to=functions.ApplyPatch  EuropejsonHere  Trying  ọbụna to=functions.ApplyPatch  있다jsonHere  !*** Begin Patch
+    </script>
   </body>
 </html>

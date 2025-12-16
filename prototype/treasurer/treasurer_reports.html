@@ -87,19 +87,31 @@
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
-                  <strong>VANNESA ROSE B.</strong>
-                  <div class="small text-muted">BSIT | 3rd Year</div>
+                  <strong>BU Polangui CSC</strong>
+                  <div class="small text-muted">Treasurer</div>
                 </div>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
                 <div class="notification-item unread">
                   <strong>Payment Pending Verification</strong>
-                  <p>Maria Santos submitted ₱500 for verification</p>
-                  <small>2 hours ago</small>
+                  <p>Several CSC fee payments are waiting for review.</p>
+                  <small>Just now</small>
+                </div>
+                <div class="notification-item unread">
+                  <strong>New Concern Submitted</strong>
+                  <p>A student reported a CSC fee posting issue.</p>
+                  <small>1 hour ago</small>
+                </div>
+                <div class="notification-item">
+                  <strong>Daily Summary</strong>
+                  <p>View today's verified CSC fee payments in the Reports page.</p>
+                  <small>Today</small>
                 </div>
               </div>
             </div>
@@ -108,14 +120,36 @@
 
         <div class="page-content">
           <div class="page-header mb-3">
-            <h2 class="fw-bold">Treasurer Reports</h2>
-            <p class="mb-0">Collections, disputes, and summaries with sample data.</p>
+            <h2 class="fw-bold">CSC Treasurer Reports</h2>
+            <p class="mb-0">CSC fee collections and concerns overview for the past 5 academic years.</p>
           </div>
 
           <div class="row g-3 mb-3">
+            <div class="col-12">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-md-3">
+                      <label class="form-label small text-muted mb-1">Filter by Academic Year:</label>
+                      <select class="form-select form-select-sm" id="treasurerAyFilter">
+                        <option value="all">All AY (Last 5 Years)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-9 text-muted small">
+                      Select an academic year to filter the charts and summary table below.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="col-md-6">
               <div class="card h-100">
-                <div class="card-header bg-gradient">Collections per Term</div>
+                <div class="card-header d-flex justify-content-between align-items-center bg-gradient">
+                  <span>CSC FEE COLLECTIONS per AY</span>
+                  <button class="btn btn-sm btn-outline-primary" type="button">
+                    <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
+                  </button>
+                </div>
                 <div class="card-body">
                   <canvas id="cscFeeChart" height="160"></canvas>
                 </div>
@@ -124,7 +158,12 @@
 
             <div class="col-md-6">
               <div class="card h-100">
-                <div class="card-header bg-gradient">Disputes by Status</div>
+                <div class="card-header d-flex justify-content-between align-items-center bg-gradient">
+                  <span>CSC FEE CONCERNS per AY</span>
+                  <button class="btn btn-sm btn-outline-primary" type="button">
+                    <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
+                  </button>
+                </div>
                 <div class="card-body">
                   <canvas id="treasurerDisputeChart" height="160"></canvas>
                 </div>
@@ -134,9 +173,9 @@
 
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center bg-gradient">
-              <span>Summary Report</span>
+              <span>CSC FEE SUMMARY (Last 5 Academic Years)</span>
               <button class="btn btn-sm btn-outline-primary" type="button">
-                Download PDF (Mock)
+                <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
               </button>
             </div>
             <div class="card-body table-wrapper">
@@ -145,40 +184,50 @@
               >
                 <thead>
                   <tr>
-                    <th>Term</th>
+                    <th>A.Y.</th>
                     <th>Total Fees</th>
                     <th>Paid</th>
                     <th>Unpaid</th>
-                    <th>Disputes</th>
                   </tr>
                 </thead>
                 <tbody id="treasurerSummaryTableBody">
                   <tr>
-                    <td>1st Sem 2024-2025</td>
-                    <td>₱520,000</td>
-                    <td>₱472,000</td>
-                    <td>₱48,000</td>
-                    <td>12</td>
-                  </tr>
-                  <tr>
-                    <td>2nd Sem 2024-2025</td>
-                    <td>₱498,000</td>
-                    <td>₱450,000</td>
-                    <td>₱48,000</td>
-                    <td>8</td>
-                  </tr>
-                  <tr>
-                    <td>Midyear 2025</td>
-                    <td>₱180,000</td>
-                    <td>₱162,000</td>
-                    <td>₱18,000</td>
-                    <td>3</td>
+                    <td colspan="4" class="text-center text-muted py-3">Loading data...</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
+
+        <footer class="app-footer">
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <div class="mb-2">
+                  <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                    <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+                  </a>
+                </div>
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
 
@@ -187,14 +236,126 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/js/data.js"></script>
     <script src="../assets/js/forms.js"></script>
+    <script src="../assets/js/treasurer_data.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
+      function initTreasurerReportsPage() {
         applyStoredTheme && applyStoredTheme();
         startClock && startClock("currentDateTime");
-        loadTreasurerReports && loadTreasurerReports();
         bindUserDropdownModalTriggers && bindUserDropdownModalTriggers();
-      });
+
+        if (typeof Chart === "undefined" || typeof treasurerAggregateCollectionsByAy !== "function") {
+          return;
+        }
+
+        const collectionsByAy = treasurerAggregateCollectionsByAy();
+        const concernsByAyStatus = treasurerAggregateConcernsByAyAndStatus();
+        const allAys = Object.keys(
+          Object.assign({}, collectionsByAy, Object.fromEntries(Object.keys(concernsByAyStatus).map(k => [k, true])))
+        ).sort();
+        const lastFiveAys = allAys.slice(-5);
+
+        const aySelect = document.getElementById("treasurerAyFilter");
+        if (aySelect) {
+          aySelect.innerHTML =
+            '<option value="all">All AY (Last 5 Years)</option>' +
+            lastFiveAys.map((ay) => `<option value="${ay}">${ay}</option>`).join("");
+          aySelect.addEventListener("change", () => renderTreasurerCharts(aySelect.value || "all"));
+        }
+
+        function renderSummaryTable(labels, collections) {
+          const tbody = document.getElementById("treasurerSummaryTableBody");
+          if (!tbody) return;
+          if (!labels.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="4" class="text-center text-muted py-3">No summary data</td></tr>';
+            return;
+          }
+          tbody.innerHTML = labels
+            .map((ay) => {
+              const verified = treasurerCscFeeRecords.filter(r => r.academicYear === ay && r.status === 'Verified');
+              const totalFees = verified.reduce((sum, r) => sum + (Number(r.amount) || 0), 0);
+              const totalStudents = new Set(treasurerCscFeeRecords.filter(r => r.academicYear === ay).map(r => r.studentId)).size;
+              const paidStudents = new Set(verified.map(r => r.studentId)).size;
+              const unpaidStudents = Math.max(0, totalStudents - paidStudents);
+              const unpaid = unpaidStudents * 220; // Estimate unpaid amount
+              return `
+                <tr>
+                  <td>${ay}</td>
+                  <td>₱${(totalFees + unpaid).toLocaleString()}</td>
+                  <td>₱${totalFees.toLocaleString()}</td>
+                  <td>₱${unpaid.toLocaleString()}</td>
+                </tr>
+              `;
+            })
+            .join("");
+        }
+
+        let collectionsChart = null;
+        let concernsChart = null;
+
+        function renderTreasurerCharts(filterAy) {
+          const collectionsCtx = document.getElementById("cscFeeChart");
+          const concernsCtx = document.getElementById("treasurerDisputeChart");
+          const aysToShow =
+            filterAy && filterAy !== "all" ? [filterAy] : lastFiveAys;
+
+          if (collectionsCtx) {
+            if (collectionsChart) collectionsChart.destroy();
+            const labels = aysToShow;
+            const data = labels.map((ay) => collectionsByAy[ay] || 0);
+            collectionsChart = new Chart(collectionsCtx, {
+              type: "bar",
+              data: {
+                labels,
+                datasets: [
+                  {
+                    label: "Total CSC Fee Collected",
+                    data,
+                    backgroundColor: "#f97316bb",
+                    borderColor: "#ea580c",
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: { beginAtZero: true },
+                },
+              },
+            });
+          }
+
+          if (concernsCtx) {
+            if (concernsChart) concernsChart.destroy();
+            const statusKeys = ["Pending Verification", "Under Review", "Resolved", "Rejected"];
+            const labels = aysToShow;
+            const colors = ["#f97316", "#eab308", "#22c55e", "#6b7280"];
+            const datasets = statusKeys.map((status, idx) => ({
+              label: status,
+              data: labels.map((ay) => (concernsByAyStatus[ay]?.[status] || 0)),
+              backgroundColor: colors[idx] + "aa",
+              stack: "concerns",
+            }));
+            concernsChart = new Chart(concernsCtx, {
+              type: "bar",
+              data: { labels, datasets },
+              options: {
+                responsive: true,
+                scales: {
+                  x: { stacked: true },
+                  y: { stacked: true, beginAtZero: true },
+                },
+              },
+            });
+          }
+
+          renderSummaryTable(aysToShow, collectionsByAy);
+        }
+
+        renderTreasurerCharts("all");
+      }
+
+      document.addEventListener("DOMContentLoaded", initTreasurerReportsPage);
     </script>
   </body>
 </html>

@@ -492,7 +492,13 @@ body.theme-dark .user-dropdown {
 }
 
 .dashboard-hero .hero-subtitle {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.85);
+}
+
+body.theme-dark .dashboard-hero .hero-subtitle,
+body.theme-dark .hero-subtitle {
+  color: #e2e8f0 !important;
+  opacity: 0.9;
 }
 
 .dashboard-hero .btn-primary {
@@ -878,6 +884,21 @@ body.theme-dark .topbar {
   background-color: rgba(30, 30, 47, 0.8);
   border-bottom-color: var(--color-dark-border);
   backdrop-filter: blur(10px);
+}
+
+.topbar #currentDateTime {
+  color: #4b5563;
+}
+
+body.theme-dark .topbar #currentDateTime {
+  color: #e2e8f0 !important;
+  opacity: 0.95;
+}
+
+/* Ensure date/time text is clearly visible in dark mode */
+body.theme-dark .topbar #currentDateTime {
+  color: #e2e8f0 !important;
+  opacity: 0.95;
 }
 
 /* Smooth transitions for all interactive elements */

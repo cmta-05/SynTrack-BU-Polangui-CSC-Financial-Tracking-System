@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../assets/css/style.css" />
   <style>
     /* Page-specific light helpers */
-    body { background:#f7f9fc; }
+    body:not(.theme-dark) { background:#f7f9fc; }
     .main-content { max-width:1280px; margin:auto; }
     .status-badge { min-width:110px; display:inline-block; text-align:center; }
     .file-preview { max-height:80px; object-fit:cover; margin-right:8px; border-radius:4px; }
@@ -105,7 +105,7 @@
 
   <!-- Workspace -->
   <div class="workspace">
-    <header class="topbar">
+        <header class="topbar">
       <div class="topbar-left">
         <i class="bi bi-calendar3 topbar-date-icon"></i>
         <small id="currentDateTime" class="text-muted"></small>
@@ -122,29 +122,31 @@
           </div>
           <div id="userDropdown" class="user-dropdown">
             <div class="user-dropdown-header">
-              <strong>VANNESA ROSE B.</strong>
-              <div class="small text-muted">BSIT | 3rd Year</div>
+              <strong>BU Polangui CSC</strong>
+              <div class="small text-muted">Treasurer</div>
             </div>
             <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
             <a href="../login.html" class="sign-out">Sign Out</a>
           </div>
           <div id="notificationPanel" class="notification-panel">
             <div class="notification-item unread">
               <strong>Payment Pending Verification</strong>
-              <p>Maria Santos submitted ₱500 for verification</p>
-              <small>2 hours ago</small>
+              <p>Several CSC fee payments are waiting for review.</p>
+              <small>Just now</small>
             </div>
             <div class="notification-item unread">
-              <strong>Concern Submitted</strong>
-              <p>Carlos Reyes filed a concern - Payment Not Reflected</p>
-              <small>5 hours ago</small>
+              <strong>New Concern Submitted</strong>
+              <p>A student reported a CSC fee posting issue.</p>
+              <small>1 hour ago</small>
             </div>
             <div class="notification-item">
-              <strong>Payment Verified</strong>
-              <p>Diana Lopez's payment (₱500) has been verified</p>
-              <small>1 day ago</small>
+              <strong>Daily Summary</strong>
+              <p>View today's verified CSC fee payments in the Reports page.</p>
+              <small>Today</small>
             </div>
           </div>
         </div>
@@ -155,8 +157,8 @@
       <section class="dashboard-hero mb-4">
         <div class="row align-items-center">
           <div class="col-md-12">
-            <h2 class="mb-1">Concerns Dashboard</h2>
-            <p class="hero-subtitle mb-0">Review, triage, and resolve submitted concerns efficiently.</p>
+            <h2 class="mb-1">CSC Fee Concerns Management</h2>
+            <p class="hero-subtitle mb-0">Review, triage, and resolve CSC fee-related concerns efficiently.</p>
           </div>
         </div>
       </section>
@@ -251,10 +253,13 @@
             <div class="card shadow-sm">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
-                  <strong>Treasurer — Concerns Dashboard</strong>
+                  <strong>CSC Fee Concerns Records</strong>
                   <div class="small-muted">Filter, review, and resolve concerns</div>
                 </div>
                 <div class="d-flex gap-2 align-items-center">
+                  <button type="button" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
+                  </button>
                   <select id="filterStatus" class="form-select form-select-sm">
                     <option value="all">All statuses</option>
                     <option value="Pending Verification">Pending Verification</option>
@@ -270,13 +275,11 @@
                 <table class="table table-sm table-hover align-middle">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Date</th>
                       <th>Student</th>
-                      <th>Module</th>
-                      <th>Amount</th>
-                      <th>Ref</th>
-                      <th>Summary</th>
+                      <th>Issue</th>
+                      <th>Proof</th>
+                      <th>Date</th>
+                      <th>Other Details</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -291,7 +294,12 @@
 
             <!-- Audit trail -->
             <div class="card shadow-sm mt-3">
-              <div class="card-header"><strong>Audit Log</strong></div>
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <strong>Audit Log</strong>
+                <button type="button" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-file-earmark-pdf me-1"></i>Download PDF (Mock)
+                </button>
+              </div>
               <div class="card-body" id="auditLog">
                 <p class="small-muted">No actions yet.</p>
               </div>
@@ -302,8 +310,31 @@
     </div>
 
     <footer class="app-footer">
-      <div class="d-flex justify-content-between flex-wrap gap-2">
-        <span>SynTrack · Bicol University Polangui - College Student Council</span>
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+            <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+              <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+              <span class="fw-semibold">SynTrack</span>
+            </div>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <div class="small">
+              <div class="mb-1">Bicol University Polangui - College Student Council</div>
+              <div class="text-muted">Financial Tracking and Payment Management System</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3 pt-3 border-top">
+          <div class="col-12 text-center">
+            <div class="mb-2">
+              <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+              </a>
+            </div>
+            <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+          </div>
+        </div>
       </div>
     </footer>
   </div>
@@ -375,6 +406,7 @@
 <script src="../assets/js/data.js"></script>
 <script src="../assets/js/forms.js"></script>
 <script src="../assets/js/main.js"></script>
+<script src="../assets/js/treasurer_data.js"></script>
 <script>
   /*******************************************************
    * Demo client-side concerns prototype
@@ -530,24 +562,40 @@
     });
   }
 
-  // Treasurer: render table
+  // Treasurer: render table (CSC Fee Concerns Management layout)
   function renderTreasurerTable(){
     const tbody = document.getElementById('treasurerTableBody');
     tbody.innerHTML = '';
     const filter = document.getElementById('filterStatus').value;
     (concernsStore.filter(c => filter==='all' ? true : c.status === filter)).forEach(c=>{
       const tr = document.createElement('tr');
+      const issueSummary = c.description.length > 80 ? c.description.substring(0,77) + '...' : c.description;
+      const proofLabel = c.attachments && c.attachments.length ? c.attachments.join(', ') : 'Uploaded proof';
       tr.innerHTML = `
-        <td>${c.id}</td>
-        <td>${(new Date(c.createdAt)).toLocaleDateString()}</td>
         <td>${escapeHtml(c.studentName)}<div class="small-muted">${c.studentId}</div></td>
-        <td>${c.module}</td>
-        <td>₱${c.amount}</td>
-        <td>${escapeHtml(c.reference)}</td>
-        <td><div class="small-muted">${escapeHtml(c.description.substring(0,60))}${c.description.length>60?'...':''}</div></td>
+        <td>${escapeHtml(issueSummary)}</td>
+        <td class="small-muted">${escapeHtml(proofLabel)}</td>
+        <td>${(new Date(c.createdAt)).toLocaleDateString()}</td>
+        <td>
+          <div class="small-muted">
+            <div><strong>Module:</strong> ${c.module}</div>
+            <div><strong>Amount:</strong> ₱${c.amount}</div>
+            <div><strong>Ref:</strong> ${escapeHtml(c.reference)}</div>
+          </div>
+        </td>
         <td><div class="badge status-badge ${statusColor(c.status)}">${c.status}</div></td>
-        <td><button class="btn btn-sm btn-outline-primary" data-id="${c.id}" onclick="openReview(event)">Review</button></td>
+        <td>
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-success" data-id="${c.id}" onclick="resolveOrReject('${c.id}','Resolved')">Resolved</button>
+            <button class="btn btn-outline-danger" data-id="${c.id}" onclick="resolveOrReject('${c.id}','Rejected')">Reject</button>
+          </div>
+        </td>
       `;
+      tr.addEventListener('click', (evt) => {
+        // avoid double-open when clicking buttons
+        if (evt.target.tagName.toLowerCase() === 'button') return;
+        openReviewById(c.id);
+      });
       tbody.appendChild(tr);
     });
   }
@@ -555,6 +603,10 @@
   // Open review modal (treasurer)
   function openReview(e){
     const id = e.currentTarget.getAttribute('data-id');
+    openReviewById(id);
+  }
+
+  function openReviewById(id){
     const c = concernsStore.find(x=>x.id===id);
     if(!c) return showToast('Concern not found.');
     document.getElementById('modalConcernId').textContent = c.id;
@@ -622,12 +674,25 @@
   // Render audit log
   function renderAudit(){
     const container = document.getElementById('auditLog');
-    if(auditStore.length === 0){ container.innerHTML = '<p class="small-muted">No actions yet.</p>'; return; }
+    if(!container) return;
+    // Use getConcernsAuditLogs if available, otherwise use auditStore
+    let logs = [];
+    if (typeof getConcernsAuditLogs === 'function') {
+      logs = getConcernsAuditLogs();
+    } else if (auditStore.length > 0) {
+      logs = auditStore.slice(0, 20).map(a => ({
+        time: a.time,
+        action: a.action,
+        user: a.user || 'BU Polangui CSC Treasurer'
+      }));
+    }
+    if(logs.length === 0){ container.innerHTML = '<p class="small-muted">No actions yet.</p>'; return; }
     container.innerHTML = '';
-    auditStore.slice(0,20).forEach(a=>{
+    logs.forEach(a=>{
       const div = document.createElement('div');
       div.className = 'audit-line';
-      div.innerHTML = `<div><strong>${a.action}</strong> • ${a.concernId}</div><div class="small-muted">${new Date(a.time).toLocaleString()} • By ${a.user}${a.note? ' • Note: '+escapeHtml(a.note):''}</div>`;
+      const timeStr = a.time.includes('T') ? new Date(a.time).toLocaleString() : a.time;
+      div.innerHTML = `<div><strong>${escapeHtml(a.action)}</strong></div><div class="small-muted">${timeStr} • By ${escapeHtml(a.user)}</div>`;
       container.appendChild(div);
     });
   }
@@ -652,24 +717,40 @@
   document.getElementById('refreshBtn').addEventListener('click', ()=>renderTreasurerTable());
   document.getElementById('filterStatus').addEventListener('change', ()=>renderTreasurerTable());
 
-  // Initial demo seed data (optional)
+  // Initial demo seed data from treasurer_data.js
   (function seed(){
-    const demo = {
-      id: genId(),
-      createdAt: new Date().toISOString(),
-      studentId: '2021-00001',
-      studentName: 'Maria Santos',
-      module: 'CSC Fee',
-      paymentDate: '2025-12-01',
-      amount: '200.00',
-      reference: 'RCPT-1002',
-      description: 'Paid amount to block treasurer but status still shows pending.',
-      attachments: ['block_receipt.jpg'],
-      status: 'Pending Verification'
-    };
-    concernsStore.push(demo);
-    auditStore.push({time:new Date().toISOString(), user:'System', action:'Seeded demo concern', concernId:demo.id});
+    if (typeof treasurerConcerns !== 'undefined' && treasurerConcerns.length > 0) {
+      treasurerConcerns.forEach(c => {
+        concernsStore.push({
+          id: c.id,
+          createdAt: c.date + 'T00:00:00',
+          studentId: c.studentId,
+          studentName: c.studentName,
+          module: 'CSC Fee',
+          paymentDate: c.date,
+          amount: '220.00',
+          reference: c.otherDetails.match(/RCPT-[A-Z0-9-]+/)?.[0] || 'N/A',
+          description: c.issue,
+          attachments: c.proof || [],
+          status: c.status
+        });
+      });
+      // Add audit logs from treasurer_data.js
+      if (typeof getConcernsAuditLogs === 'function') {
+        const auditLogs = getConcernsAuditLogs();
+        auditLogs.forEach(log => {
+          auditStore.push({
+            time: log.time,
+            user: log.user,
+            action: log.action,
+            concernId: log.action.match(/C-\d{4}-\d{3}/)?.[0] || 'N/A'
+          });
+        });
+      }
+    }
     renderStudentHistory();
+    renderTreasurerTable();
+    renderAudit();
   })();
 
   // Expose for modal onclick from inline handlers

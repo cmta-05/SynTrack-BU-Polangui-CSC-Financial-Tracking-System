@@ -284,7 +284,7 @@
         gap: 12px;
         padding: 0.55rem 0.75rem;
         border-radius: 8px;
-        color: rgba(174, 163, 163, 0.048);
+        color: #ffffff;
         text-decoration: none;
         transition: background-color 150ms ease, color 150ms ease;
       }
@@ -338,41 +338,18 @@
 
 
       /* ------------------ LAYOUT HELPERS: CARDS & TABLES ------------------ */
-
-      /* Make stat card rows stretch so all cards are same height */
-      .row.align-items-stretch.d-flex {
-        align-items: stretch;
-      }
-
-      /* Ensure each card inside these columns grows to full height */
-      .card.h-100 {
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* Make card body expand so footer sticks to bottom */
-      .card.h-100 > .card-body {
-        flex: 1 1 auto;
-      }
-
-      /* Table wrapper with a max-height + vertical scroll */
       .table-fixed-height {
-        max-height: 320px; /* adjust as desired */
+        max-height: 320px;
         overflow-y: auto;
-        padding-right: 0.25rem; /* avoid content touching edge */
+        padding-right: 0.25rem;
       }
 
-      /* Smaller max-height on mobile */
       @media (max-width: 768px) {
-        .table-fixed-height { max-height: 260px; }
+        .table-fixed-height {
+          max-height: 260px;
+        }
       }
 
-      /* Make table rows more distinct on hover */
-      .table.table-hover tbody tr:hover {
-        background-color: rgba(0,0,0,0.03);
-      }
-
-      /* Visual / spacing tweaks */
       .card .badge {
         min-width: 36px;
         display: inline-flex;
@@ -382,7 +359,7 @@
       }
 
       .card .card-footer {
-        border-top: 1px solid rgba(0,0,0,0.04);
+        border-top: 1px solid rgba(0, 0, 0, 0.04);
       }
 
     </style>
@@ -463,31 +440,32 @@
               </div>
               <div id="userDropdown" class="user-dropdown">
                 <div class="user-dropdown-header">
-                  <strong>VANNESA ROSE B.</strong>
-                  <div class="small text-muted">BSIT | 3rd Year</div>
+                  <strong>BU Polangui CSC</strong>
+                  <div class="small text-muted">Treasurer</div>
                 </div>
-                <a href="#">Profile</a>
-                <a href="#">Manage Password</a>
-                <a href="#">FAQs</a>
-                <a href="#">Contact Admin</a>
-                <a href="#">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#managePasswordModal">Manage Password</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#faqsModal">FAQs</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#contactAdminModal">Contact Admin</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal">Send Feedback</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#aboutDevelopersModal">About Developers</a>
                 <a href="../login.html" class="sign-out">Sign Out</a>
               </div>
               <div id="notificationPanel" class="notification-panel">
                 <div class="notification-item unread">
                   <strong>Payment Pending Verification</strong>
-                  <p>Maria Santos submitted ₱500 for verification</p>
-                  <small>2 hours ago</small>
+                  <p>Several CSC fee payments are waiting for review.</p>
+                  <small>Just now</small>
                 </div>
                 <div class="notification-item unread">
-                  <strong>Concern Submitted</strong>
-                  <p>Carlos Reyes filed a concern - Payment Not Reflected</p>
-                  <small>5 hours ago</small>
+                  <strong>New Concern Submitted</strong>
+                  <p>A student reported a CSC fee posting issue.</p>
+                  <small>1 hour ago</small>
                 </div>
                 <div class="notification-item">
-                  <strong>Payment Verified</strong>
-                  <p>Diana Lopez's payment (₱500) has been verified</p>
-                  <small>1 day ago</small>
+                  <strong>Daily Summary</strong>
+                  <p>View today's verified CSC fee payments in the Reports page.</p>
+                  <small>Today</small>
                 </div>
               </div>
             </div>
@@ -571,10 +549,10 @@
                   <thead>
                     <tr>
                       <th>Student</th>
-                      <th>Block</th>
+                      <th>A.Y.</th>
+                      <th>Yr. Course, Block</th>
                       <th>Amount</th>
                       <th>Date</th>
-                      <th>Reference</th>
                     </tr>
                   </thead>
                   <tbody id="pendingVerificationsBody">
@@ -603,10 +581,12 @@
                 <table class="table table-striped table-sm table-hover mb-0">
                   <thead>
                     <tr>
+                      <th>Receipt No.</th>
                       <th>Student</th>
+                      <th>A.Y.</th>
+                      <th>Yr. Course, Block</th>
                       <th>Amount</th>
-                      <th>Date Verified</th>
-                      <th>Verified By</th>
+                      <th>Date</th>
                     </tr>
                   </thead>
                   <tbody id="verifiedPaymentsBody">
@@ -618,7 +598,7 @@
               </div>
             </div>
             <div class="card-footer bg-light">
-              <button class="btn btn-sm btn-outline-primary" onclick="navigateTo('treasurer_reports.html')">
+              <button class="btn btn-sm btn-outline-primary" onclick="navigateTo('csc_fee.html')">
                 View Full History →
               </button>
             </div>
@@ -674,13 +654,31 @@
         </div>
 
         <footer class="app-footer">
-          <div class="d-flex justify-content-between flex-wrap gap-2">
-            <span
-              >SynTrack · Bicol University Polangui - College Student
-              Council</span
-            >
-            <span class="meta-text">
-            </span>
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+                  <img src="../assets/img/csc-paytrack-logo.png" alt="SynTrack Logo" style="width: 32px; height: 32px; object-fit: contain;" />
+                  <span class="fw-semibold">SynTrack</span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                <div class="small">
+                  <div class="mb-1">Bicol University Polangui - College Student Council</div>
+                  <div class="text-muted">Financial Tracking and Payment Management System</div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 pt-3 border-top">
+              <div class="col-12 text-center">
+                <div class="mb-2">
+                  <a href="https://www.facebook.com/bupc.csc.one" target="_blank" rel="noopener noreferrer" class="facebook-link">
+                    <i class="bi bi-facebook me-2"></i>Bicol University Polangui College Student Council Facebook Page
+                  </a>
+                </div>
+                <small class="text-muted">© 2025 SynTrack. All rights reserved.</small>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
@@ -692,46 +690,9 @@
     <script src="../assets/js/data.js"></script>
     <script src="../assets/js/forms.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/treasurer_data.js"></script>
     <script>
-      /* ----------------------- Mock Sample Data ----------------------- */
-      const mockStudentList = [
-        { id: 'BU2021001', name: 'Juan Dela Cruz', block: '1A', paid: true },
-        { id: 'BU2021002', name: 'Maria Santos', block: '1A', paid: false },
-        { id: 'BU2021003', name: 'Carlos Reyes', block: '1B', paid: false },
-        { id: 'BU2021004', name: 'Diana Lopez', block: '1B', paid: true },
-        { id: 'BU2021005', name: 'Fernando Torres', block: '2A', paid: false },
-        { id: 'BU2021006', name: 'Elena Rodriguez', block: '2A', paid: true },
-        { id: 'BU2021010', name: 'Anna Garcia', block: '2B', paid: true },
-        { id: 'BU2021011', name: 'Roberto Luna', block: '2B', paid: true },
-        { id: 'BU2021012', name: 'Sofia Morales', block: '3A', paid: true },
-        { id: 'BU2021013', name: 'Miguel Cruz', block: '3A', paid: true }
-      ];
-
-      const mockPendingVerifications = [
-        { studentId: 'BU2021002', studentName: 'Maria Santos', block: '1A', amount: 500, date: '2025-12-07', reference: 'PV001' },
-        { studentId: 'BU2021003', studentName: 'Carlos Reyes', block: '1B', amount: 500, date: '2025-12-06', reference: 'PV002' },
-        { studentId: 'BU2021005', studentName: 'Fernando Torres', block: '2A', amount: 500, date: '2025-12-05', reference: 'PV003' }
-      ];
-
-      const mockVerifiedPayments = [
-        { studentId: 'BU2021001', studentName: 'Juan Dela Cruz', amount: 500, dateVerified: '2025-12-04', verifiedBy: 'VANNESA ROSE B.' },
-        { studentId: 'BU2021004', studentName: 'Diana Lopez', amount: 500, dateVerified: '2025-12-03', verifiedBy: 'VANNESA ROSE B.' },
-        { studentId: 'BU2021006', studentName: 'Elena Rodriguez', amount: 500, dateVerified: '2025-12-02', verifiedBy: 'VANNESA ROSE B.' },
-        { studentId: 'BU2021010', studentName: 'Anna Garcia', amount: 500, dateVerified: '2025-12-01', verifiedBy: 'VANNESA ROSE B.' }
-      ];
-
-      const mockConcerns = [
-        { studentId: 'BU2021002', studentName: 'Maria Santos', status: 'Open', date: '2025-12-06' },
-        { studentId: 'BU2021003', studentName: 'Carlos Reyes', status: 'Open', date: '2025-12-05' },
-        { studentId: 'BU2021005', studentName: 'Fernando Torres', status: 'In Review', date: '2025-12-04' }
-      ];
-
-      let auditTrail = [
-        { timestamp: '2025-12-07 10:30:00', action: 'VIEWED_DASHBOARD', details: 'Accessed Treasurer Dashboard' },
-        { timestamp: '2025-12-06 15:45:00', action: 'VERIFIED_PAYMENT', details: "Verified payment from Diana Lopez (₱500)" },
-        { timestamp: '2025-12-05 09:20:00', action: 'VERIFIED_PAYMENT', details: "Verified payment from Elena Rodriguez (₱500)" },
-        { timestamp: '2025-12-04 14:10:00', action: 'VERIFIED_PAYMENT', details: "Verified payment from Anna Garcia (₱500)" }
-      ];
+      /* ----------------------- Use treasurer_data.js ----------------------- */
 
       /* ----------------------- Rendering Functions ----------------------- */
       function loadTreasurerDashboard() {
@@ -744,10 +705,15 @@
       }
 
       function updateStatisticalCards() {
-        const totalCollected = mockVerifiedPayments.reduce((sum, p) => sum + p.amount, 0);
-        const pendingCount = mockPendingVerifications.length;
-        const openConcerns = mockConcerns.filter(d => d.status === 'Open').length;
-        const studentsNotPaid = mockStudentList.filter(s => !s.paid).length;
+        // Calculate from treasurerCscFeeRecords
+        const verifiedPayments = treasurerCscFeeRecords.filter(r => r.status === 'Verified');
+        const totalCollected = verifiedPayments.reduce((sum, r) => sum + (Number(r.amount) || 0), 0);
+        const pendingCount = treasurerCscFeeRecords.filter(r => r.status === 'Pending Verification').length;
+        const openConcerns = treasurerConcerns.filter(c => c.status === 'Pending Verification' || c.status === 'Under Review').length;
+        // Estimate students not yet paid (total students minus verified)
+        const totalStudents = new Set(treasurerCscFeeRecords.map(r => r.studentId)).size;
+        const verifiedStudents = new Set(verifiedPayments.map(r => r.studentId)).size;
+        const studentsNotPaid = Math.max(0, totalStudents - verifiedStudents);
 
         const elTotal = document.getElementById('totalCollected');
         const elPending = document.getElementById('pendingCount');
@@ -766,49 +732,83 @@
       function loadPendingVerificationsPreview() {
         const tbody = document.getElementById('pendingVerificationsBody');
         if (!tbody) return;
-        if (mockPendingVerifications.length === 0) {
+        const pending = treasurerCscFeeRecords.filter(r => r.status === 'Pending Verification').slice(0, 10);
+        if (pending.length === 0) {
           tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No pending verifications</td></tr>';
           return;
         }
-        const preview = mockPendingVerifications.slice(0, 10);
-        tbody.innerHTML = preview.map(item => `\n          <tr>\n            <td><strong>${item.studentName}</strong></td>\n            <td>${item.block}</td>\n            <td>₱${item.amount.toFixed(2)}</td>\n            <td>${item.date}</td>\n            <td><span class="badge bg-secondary">${item.reference}</span></td>\n          </tr>\n        `).join('');
+        tbody.innerHTML = pending
+          .map(
+            (item) => `
+          <tr>
+            <td><strong>${item.studentName}</strong><div class="small text-muted">${item.studentId}</div></td>
+            <td>${item.academicYear}</td>
+            <td>${item.yearLevel} ${item.course} • ${item.block}</td>
+            <td>₱${Number(item.amount || 0).toFixed(2)}</td>
+            <td>${item.date}</td>
+          </tr>
+        `,
+          )
+          .join('');
       }
 
       function loadRecentVerifiedPaymentsPreview() {
         const tbody = document.getElementById('verifiedPaymentsBody');
         if (!tbody) return;
-        if (mockVerifiedPayments.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-3">No verified payments yet</td></tr>';
+        const verified = treasurerCscFeeRecords.filter(r => r.status === 'Verified').slice(0, 10);
+        if (verified.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">No verified payments yet</td></tr>';
           return;
         }
-        const preview = mockVerifiedPayments.slice(0, 10);
-        tbody.innerHTML = preview.map(item => `\n          <tr>\n            <td><strong>${item.studentName}</strong></td>\n            <td>₱${item.amount.toFixed(2)}</td>\n            <td>${item.dateVerified}</td>\n            <td>${item.verifiedBy}</td>\n          </tr>\n        `).join('');
+        tbody.innerHTML = verified
+          .map(
+            (item) => `
+          <tr>
+            <td><strong>${item.receiptNo}</strong></td>
+            <td>${item.studentName}</td>
+            <td>${item.academicYear}</td>
+            <td>${item.yearLevel} ${item.course} • ${item.block}</td>
+            <td>₱${Number(item.amount || 0).toFixed(2)}</td>
+            <td>${item.date}</td>
+          </tr>
+        `,
+          )
+          .join('');
         const verifiedBadge = document.getElementById('verifiedBadge');
-        if (verifiedBadge) verifiedBadge.textContent = mockVerifiedPayments.length;
+        if (verifiedBadge) verifiedBadge.textContent = treasurerCscFeeRecords.filter(r => r.status === 'Verified').length;
       }
 
       function loadConcernsSnapshot() {
         const tbody = document.getElementById('concernsSnapshotBody');
         if (!tbody) return;
-        if (mockConcerns.length === 0) {
+        const preview = treasurerConcerns.slice(0, 5);
+        if (preview.length === 0) {
           tbody.innerHTML = '<tr><td colspan="2" class="text-center text-muted py-3">No concerns</td></tr>';
           return;
         }
-        const preview = mockConcerns.slice(0, 5);
-        tbody.innerHTML = preview.map(item => `\n          <tr>\n            <td><strong>${item.studentName}</strong></td>\n            <td><span class="badge ${item.status === 'Open' ? 'bg-danger' : 'bg-warning'}">${item.status}</span></td>\n          </tr>\n        `).join('');
+        tbody.innerHTML = preview.map(item => {
+          const statusClass = item.status === 'Pending Verification' ? 'bg-danger' : 
+                              item.status === 'Under Review' ? 'bg-warning' : 
+                              item.status === 'Resolved' ? 'bg-success' : 'bg-secondary';
+          return `\n          <tr>\n            <td><strong>${item.studentName}</strong></td>\n            <td><span class="badge ${statusClass}">${item.status}</span></td>\n          </tr>\n        `;
+        }).join('');
         const concernsBadge = document.getElementById('concernsBadge');
-        if (concernsBadge) concernsBadge.textContent = mockConcerns.length;
+        if (concernsBadge) concernsBadge.textContent = treasurerConcerns.length;
       }
 
       function loadAuditActivityLog() {
         const logContainer = document.getElementById('auditLogBody');
         if (!logContainer) return;
-        if (auditTrail.length === 0) {
+        const cscAuditLogs = getCscFeeAuditLogs();
+        const concernsAuditLogs = getConcernsAuditLogs();
+        const combinedLogs = [...cscAuditLogs.slice(0, 5), ...concernsAuditLogs.slice(0, 5)]
+          .sort((a, b) => new Date(b.time) - new Date(a.time))
+          .slice(0, 10);
+        if (combinedLogs.length === 0) {
           logContainer.innerHTML = '<p class="text-muted text-center py-3">No activities logged yet</p>';
           return;
         }
-        const preview = auditTrail.slice(0, 10);
-        logContainer.innerHTML = preview.map(item => `\n          <div class="audit-log-item">\n            <div class="audit-log-action">${item.action.replace(/_/g, ' ')}</div>\n            <small class="audit-log-time">${item.timestamp}</small>\n            <div class="text-muted" style="font-size: 0.85rem;">${item.details}</div>\n          </div>\n        `).join('');
+        logContainer.innerHTML = combinedLogs.map(item => `\n          <div class="audit-log-item mb-2 pb-2 border-bottom">\n            <div class="audit-log-action fw-semibold">${item.action}</div>\n            <small class="audit-log-time text-muted">${item.time}</small>\n            <div class="text-muted small">${item.user}</div>\n          </div>\n        `).join('');
       }
 
       /* Notifications: update badge count based on unread items in the DOM */
