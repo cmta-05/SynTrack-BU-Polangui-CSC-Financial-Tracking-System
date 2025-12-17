@@ -116,19 +116,35 @@
 
   <!-- Workspace -->
   <div class="workspace">
-        <header class="topbar">
+    <header class="topbar">
       <div class="topbar-left">
         <i class="bi bi-calendar3 topbar-date-icon" style="color: inherit;"></i>
         <small id="currentDateTime" class="text-muted"></small>
       </div>
       <div class="topbar-actions">
-        <button type="button" class="icon-btn theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">🌓</button>
-        <button type="button" class="icon-btn notification-btn" aria-label="Notifications" onclick="toggleNotifications()">
+        <button
+          type="button"
+          class="icon-btn theme-toggle-btn"
+          onclick="toggleTheme()"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+        <button
+          type="button"
+          class="icon-btn notification-btn"
+          aria-label="Notifications"
+          onclick="toggleNotifications()"
+        >
           <span class="notification-badge">3</span>
           🔔
         </button>
         <div class="user-menu">
-          <div class="user-avatar" onclick="toggleUserMenu()" role="button">
+          <div
+            class="user-avatar"
+            onclick="toggleUserMenu()"
+            role="button"
+          >
             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
           </div>
           <div id="userDropdown" class="user-dropdown">

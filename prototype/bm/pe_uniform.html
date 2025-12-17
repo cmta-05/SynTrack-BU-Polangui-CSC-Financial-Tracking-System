@@ -21,6 +21,19 @@
       href="../assets/img/csc-paytrack-logo.png"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      .topbar-date-icon {
+        color: inherit !important;
+        opacity: 1 !important;
+        font-size: 1rem !important;
+      }
+      [data-theme="dark"] .topbar-date-icon {
+        color: #cbd5e0 !important;
+      }
+      [data-theme="light"] .topbar-date-icon {
+        color: #6c757d !important;
+      }
+    </style>
   </head>
   <body onload="initPage('bm-pe-uniform')">
     <div class="app-shell">
@@ -75,7 +88,7 @@
       <div class="workspace">
         <header class="topbar">
           <div class="topbar-left">
-            <i class="bi bi-calendar3 topbar-date-icon"></i>
+            <i class="bi bi-calendar3 topbar-date-icon" style="color: inherit;"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">
@@ -145,12 +158,13 @@
                 <p class="mb-0">Track and manage PE uniform orders with payment verification and order status tracking. Monitor orders from placement to completion.</p>
               </div>
               <button
-                class="btn btn-primary"
                 type="button"
+                class="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#attachRecordModal"
               >
-                <i class="bi bi-camera me-2"></i>Attach New Records
+                <i class="bi bi-camera me-1"></i>
+                Attach New Records
               </button>
             </div>
           </div>
@@ -539,9 +553,11 @@
           </div>
           <div class="modal-body text-center">
             <div class="display-4 mb-3">
-              <i class="bi bi-camera-fill" style="color: var(--color-orange);"></i>
+              <i class="bi bi-camera-fill"></i>
             </div>
-            <p class="mb-2">Camera indicator for prototype sample only.</p>
+            <p class="mb-2">
+              Attach New Records
+            </p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

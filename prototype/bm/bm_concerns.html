@@ -21,6 +21,19 @@
       href="../assets/img/csc-paytrack-logo.png"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      .topbar-date-icon {
+        color: inherit !important;
+        opacity: 1 !important;
+        font-size: 1rem !important;
+      }
+      [data-theme="dark"] .topbar-date-icon {
+        color: #cbd5e0 !important;
+      }
+      [data-theme="light"] .topbar-date-icon {
+        color: #6c757d !important;
+      }
+    </style>
   </head>
   <body onload="initPage('bm-concerns')">
     <div class="app-shell">
@@ -75,7 +88,7 @@
       <div class="workspace">
         <header class="topbar">
           <div class="topbar-left">
-            <i class="bi bi-calendar3 topbar-date-icon"></i>
+            <i class="bi bi-calendar3 topbar-date-icon" style="color: inherit;"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">

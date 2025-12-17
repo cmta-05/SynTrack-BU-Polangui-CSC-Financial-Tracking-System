@@ -189,154 +189,6 @@
         }
       }
 
-      /* ---------------- Sidebar: fixed, collapsible (expanded -> collapsed icon-only) ---------------- */
-
-      :root {
-        --sidebar-width: 240px;
-        --sidebar-collapsed-width: 72px;
-      }
-
-      /* Make sidebar fixed and independent of page scroll */
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: var(--sidebar-width);
-        padding: 1rem 0.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        z-index: 1500;
-        transition: width 220ms ease, background-color 200ms ease;
-        background-color: var(--surface-2, #f8fafc);
-        border-right: 1px solid rgba(0,0,0,0.06);
-        overflow: auto;
-      }
-
-      /* Keep the workspace offset when sidebar exists */
-      .workspace {
-        transition: margin-left 220ms ease;
-        margin-left: var(--sidebar-width);
-      }
-
-      /* Sidebar top (profile + collapse) */
-      .sidebar-top {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0 0.5rem;
-      }
-
-      /* Collapse button (left) */
-      .sidebar-collapse {
-        background: transparent;
-        border: none;
-        color: inherit;
-        font-size: 1.1rem;
-        cursor: pointer;
-      }
-
-      /* Profile area */
-      .sidebar-profile {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        padding: 0.4rem 0.6rem;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-      .sidebar-profile:focus { outline: none; box-shadow: 0 0 0 3px rgba(99,179,237,0.12); }
-
-      /* avatar circle */
-      .logo-circle {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: linear-gradient(135deg,#173A61,#17616E);
-        color: #fff;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 0.95rem;
-      }
-
-      /* profile meta (hidden in collapsed) */
-      .sidebar-profile-meta { display: block; }
-      .sidebar-profile .user-fullname { font-size: 0.95rem; }
-      .sidebar-profile .user-role { font-size: 0.78rem; }
-
-      /* Sidebar label */
-      .sidebar-label {
-        padding: 0.45rem 0.8rem;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        opacity: 0.65;
-        color: inherit;
-      }
-
-      /* Nav links */
-      .sidebar-nav { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.5rem 0.25rem; }
-      .sidebar .nav-link {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 0.55rem 0.75rem;
-        border-radius: 8px;
-        color: #ffffff;
-        text-decoration: none;
-        transition: background-color 150ms ease, color 150ms ease;
-      }
-      .sidebar .nav-link i { font-size: 1.18rem; width: 24px; text-align: center; }
-
-      /* subtle active highlight (Option A) */
-      .sidebar .nav-link.active {
-        background-color: rgba(23,58,97,0.08);
-        color: #173A61;
-      }
-
-      /* hover */
-      .sidebar .nav-link:hover { background-color: rgba(23,58,97,0.06); color: #173A61; }
-
-      /* text label */
-      .nav-text { white-space: nowrap; }
-
-      /* footer */
-      .sidebar-footer { margin-top: auto; padding: 0.8rem; }
-
-      /* COLLAPSED STATE - applied on body.sidebar-collapsed */
-      body.sidebar-collapsed .sidebar {
-        width: var(--sidebar-collapsed-width);
-      }
-      body.sidebar-collapsed .workspace {
-        margin-left: var(--sidebar-collapsed-width);
-      }
-      /* hide text labels in collapsed */
-      body.sidebar-collapsed .nav-text,
-      body.sidebar-collapsed .sidebar-profile-meta,
-      body.sidebar-collapsed .sidebar-label,
-      body.sidebar-collapsed .sidebar-footer { display: none !important; }
-
-      /* center nav icons when collapsed */
-      body.sidebar-collapsed .nav-link { justify-content: center; padding: 0.6rem 0; }
-      body.sidebar-collapsed .nav-link i { font-size: 1.25rem; }
-
-      /* tooltips visibility (when collapsed) - bootstrap will handle showing the tooltip */
-      body.sidebar-collapsed .nav-link[title] { position: relative; }
-
-      /* Dark mode tweaks (merge-friendly with your existing dark vars) */
-      :root[data-theme="dark"] .sidebar { background-color: #1f2937 !important; border-right-color: #374151 !important; }
-      :root[data-theme="dark"] .sidebar .nav-link { color: #cbd5e0 !important; }
-      :root[data-theme="dark"] .sidebar .nav-link.active { background-color: rgba(99,179,237,0.08) !important; color: #63b3ed !important; }
-
-      /* small screens: allow default collapsed behavior */
-      @media (max-width: 992px) {
-        body:not(.sidebar-collapsed) .workspace { margin-left: var(--sidebar-collapsed-width); } /* mobile: keep smaller offset */
-        .sidebar { position: fixed; z-index: 1600; }
-      }
-
-
       /* ------------------ LAYOUT HELPERS: CARDS & TABLES ------------------ */
       .table-fixed-height {
         max-height: 320px;
@@ -395,6 +247,24 @@
       [data-theme="dark"] .border-left-info {
         border-left-color: currentColor !important;
       }
+      [data-theme="dark"] .card {
+        background-color: #1f2937 !important;
+        border-color: #374151 !important;
+      }
+      [data-theme="dark"] .card-header {
+        background-color: #374151 !important;
+        border-bottom-color: #4b5563 !important;
+        color: #e5e7eb !important;
+      }
+      [data-theme="dark"] .card-body {
+        color: #e5e7eb !important;
+      }
+      [data-theme="dark"] .text-muted {
+        color: #9ca3af !important;
+      }
+      [data-theme="dark"] .dashboard-card {
+        background-color: #1f2937 !important;
+      }
 
     </style>
   </head>
@@ -439,7 +309,7 @@
         </div>
       </aside>
 
-
+      <!-- Workspace -->
       <div class="workspace">
         <header class="topbar">
           <div class="topbar-left">

@@ -1997,17 +1997,41 @@ body.theme-dark .card-header {
   color: #ffd700 !important;
 }
 
-/* Gradient headers: dark text on light mode, white on dark mode */
-body:not(.theme-dark) .card-header.bg-gradient,
-body:not(.theme-dark) .card-header.bg-gradient * {
-  color: #1e1010 !important;
-  text-shadow: none !important;
-}
-
-body.theme-dark .card-header.bg-gradient,
-body.theme-dark .card-header.bg-gradient * {
+/* Gradient headers: ALWAYS white text for visibility on gradient backgrounds */
+/* This ensures section titles are visible in both light and dark mode */
+.card-header.bg-gradient,
+.card-header.bg-gradient *,
+.card-header.bg-gradient span,
+.card-header.bg-gradient i {
   color: #ffffff !important;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* Override any theme-specific rules that might force dark text */
+body:not(.theme-dark) .card-header.bg-gradient,
+body:not(.theme-dark) .card-header.bg-gradient *,
+body:not(.theme-dark) .card-header.bg-gradient span,
+body:not(.theme-dark) .card-header.bg-gradient i,
+body.theme-dark .card-header.bg-gradient,
+body.theme-dark .card-header.bg-gradient *,
+body.theme-dark .card-header.bg-gradient span,
+body.theme-dark .card-header.bg-gradient i,
+[data-theme="light"] .card-header.bg-gradient,
+[data-theme="light"] .card-header.bg-gradient *,
+[data-theme="light"] .card-header.bg-gradient span,
+[data-theme="light"] .card-header.bg-gradient i,
+[data-theme="dark"] .card-header.bg-gradient,
+[data-theme="dark"] .card-header.bg-gradient *,
+[data-theme="dark"] .card-header.bg-gradient span,
+[data-theme="dark"] .card-header.bg-gradient i {
+  color: #ffffff !important;
+}
+
+/* Force white text on gradient headers with inline gradient styles */
+.card-header[style*="gradient"] *,
+.card-header[style*="gradient"] span,
+.card-header[style*="gradient"] i {
+  color: #ffffff !important;
 }
 
 /* ====== TABLE ENHANCEMENTS ====== */

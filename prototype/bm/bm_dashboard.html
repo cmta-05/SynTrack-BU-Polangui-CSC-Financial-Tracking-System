@@ -22,6 +22,17 @@
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <style>
+      .topbar-date-icon {
+        color: inherit !important;
+        opacity: 1 !important;
+        font-size: 1rem !important;
+      }
+      [data-theme="dark"] .topbar-date-icon {
+        color: #cbd5e0 !important;
+      }
+      [data-theme="light"] .topbar-date-icon {
+        color: #6c757d !important;
+      }
       .border-left-primary { border-left: 4px solid #0d6efd !important; }
       .border-left-warning { border-left: 4px solid #ffc107 !important; }
       .border-left-danger { border-left: 4px solid #dc3545 !important; }
@@ -89,10 +100,11 @@
         </div>
       </aside>
 
+      <!-- Workspace -->
       <div class="workspace">
         <header class="topbar">
           <div class="topbar-left">
-            <i class="bi bi-calendar3 topbar-date-icon"></i>
+            <i class="bi bi-calendar3 topbar-date-icon" style="color: inherit;"></i>
             <small id="currentDateTime" class="text-muted"></small>
           </div>
           <div class="topbar-actions">
